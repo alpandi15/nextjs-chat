@@ -1,6 +1,7 @@
 import type { AppProps, AppContext } from 'next/app'
 import { FC } from 'react'
 import Head from 'next/head'
+import { config, dom } from "@fortawesome/fontawesome-svg-core"
 import { SyncLoader } from 'react-spinners'
 import { QueryClientProvider, QueryClient } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query/devtools'
@@ -11,6 +12,7 @@ import ApplicationContext, { AppContextType, UserDataContext } from '../context/
 import { useRouteState } from '../hook/useRouteState'
 import '../styles/tailwind.css'
 
+config.autoAddCss = false;
 const queryClient = new QueryClient()
 
 function MyApp({
@@ -29,6 +31,7 @@ function MyApp({
       >
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <style>{dom.css()}</style>
         </Head>
         <>
           <Component {...pageProps} />
