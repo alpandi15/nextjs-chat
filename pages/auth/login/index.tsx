@@ -9,6 +9,7 @@ import {
 import { setCookie } from 'nookies'
 import Layout from '../../../components/Layout'
 import {
+  Form,
   FormControl,
   Input,
   Label,
@@ -54,7 +55,7 @@ export default loggedChecked(function Login () {
       <Content>
         <FormContent>
           <h3>Login</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <FormControl>
               <Input
                 type="text"
@@ -106,7 +107,6 @@ export default loggedChecked(function Login () {
                 type="submit"
                 disabled={isSubmitting}
               />
-              <div role="button" className="text-2xl mb-3 text-center">TAILWIND</div>
               <div>
                 <Link href="/auth/register">
                   <a>Register</a>
@@ -120,7 +120,7 @@ export default loggedChecked(function Login () {
                 </Link>
               </div>
             </div>
-          </form>
+          </Form>
         </FormContent>
       </Content>
     </Layout>

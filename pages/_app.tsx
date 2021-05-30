@@ -3,7 +3,7 @@ import { FC } from 'react'
 import Head from 'next/head'
 import { SyncLoader } from 'react-spinners'
 import { QueryClientProvider, QueryClient } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+// import { ReactQueryDevtools } from 'react-query/devtools'
 import styled from 'styled-components'
 import GlobalStyle from '../styles/GlobalStyle'
 import { apiGetProfile, logout } from '../services/auth'
@@ -38,7 +38,7 @@ function MyApp({
         </>
         <GlobalStyle />
       </ApplicationContext.Provider>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   )
 }

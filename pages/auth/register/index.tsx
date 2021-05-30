@@ -240,9 +240,11 @@ const Content = styled.div`
 const FormContent = styled.div`
   width: 400px;
   padding: 1.5rem;
-  // text-align: center;
   background-color: #FFFFFF;
   border-radius: 20px;
+  max-height: 80%;
+  overflow: hidden;
+  overflow-y: auto;
 
   @media only screen and ${device?.mobileS} {
     width: 88%;

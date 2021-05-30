@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const Form = styled.form`
+  position: relative;
+`
+
 export const FormControl = styled.div`
   margin-top: 1.5rem;
   position: relative;
@@ -71,10 +75,11 @@ export const Label = styled.label`
   }
 `
 
-export const ErrorInputMessage = styled.span`
+export const ErrorInputMessage = styled.div`
   position: absolute;
-  bottom: -10px;
-  left: 0;
+  top: 16px;
   font-size: 10px;
   color: #a62626;
+  right: 0;
+  pointer-events: none;
 `
