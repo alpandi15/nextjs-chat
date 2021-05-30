@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import {
   faCommentAlt,
   faCheck,
-  faSignOutAlt
+  faSignOutAlt,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from 'next/link'
@@ -79,7 +80,37 @@ const Home = () => {
           </ContentListChat>
         </LeftSide>
         <RightSide>
-          Kanan
+          <Header>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <ProfileImg>
+                <img src="/vercel.svg" alt=""/>
+              </ProfileImg>
+              <div style={{
+                padding: '0 8px'
+              }}>
+                <div style={{
+                  fontSize: '14px',
+                  fontWeight: 500
+                }}>{user?.name}</div>
+                <div style={{ fontSize: '11px' }}>Online</div>
+              </div>
+            </div>
+            <ActionContent>
+              <ButtonIcon onClick={logout}>
+                <FontAwesomeIcon color="#4e4e4e" icon={faTimes}/>
+              </ButtonIcon>
+            </ActionContent>
+          </Header>
+          <ContentMessages>
+            <Message>
+              Isi Pesan
+            </Message>
+            <FormSendMessage>
+              <SearchBar
+                placeholder="Tulis sesuatu..."
+              />
+            </FormSendMessage>
+          </ContentMessages>
         </RightSide>
       </Content>
     </ContentLayout>
@@ -97,16 +128,19 @@ const ContentLayout = styled.div`
 const Content = styled.div`
   background-color: #FFF;
   width: 100%;
-  max-width: 90%;
+  max-width: 80%;
   min-width: 380px;
   display: flex;
+  height: 512px;
+  overflow: hidden;
 `
 const LeftSide = styled.div`
-  width: 40%;
+  width: 35%;
 `
 const RightSide = styled.div`
-  background: blue;
-  width: 60%;
+  width: 65%;
+  border-left: 1px solid #cecece;
+  position: relative;
 `
 const Header = styled.div`
   background: #dedede;
@@ -144,8 +178,8 @@ const SearchBar = styled.input`
   font-size: 12px;
 `
 const ContentListChat = styled.div`
-  height: 400px;
-  max-height: 400px;
+  height: 374px;
+  max-height: 374px;
   overflow: hidden;
   overflow-y: scroll;
 `
@@ -167,6 +201,12 @@ const ContantName = styled.div`
   font-size: 14px;
   font-weight: 600;
 `
-const Logout = styled.button`
-  margin-top: 2rem;
+const ContentMessages = styled.div`
+`
+const FormSendMessage = styled.div`
+  padding: 10px;
+  background-color: rgb(247 247 247);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 `
