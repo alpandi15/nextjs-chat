@@ -40,7 +40,7 @@ export default loggedChecked(function Login () {
   const onSubmit = async (data: FormInputProps) => {
     const login = await apiLogin(data)
     if (login?.success) {
-      setCookie(null, TOKEN, login?.data?.access_token , {
+      setCookie(null, TOKEN, login?.token , {
         maxAge: 7 * 24 * 60 * 60,
         path: '/',
       })

@@ -6,7 +6,7 @@ import { TOKEN } from '../../constants'
 
 export async function apiRegister (data: any) {
   return request({
-    url: '/auth/register',
+    url: '/register',
     auth: false,
     data,
     method: 'post'
@@ -15,7 +15,7 @@ export async function apiRegister (data: any) {
 
 export async function apiLogin (data: any) {
   return request({
-    url: '/auth/login',
+    url: '/login',
     auth: false,
     data,
     method: 'post'
@@ -24,7 +24,7 @@ export async function apiLogin (data: any) {
 
 export async function apiGetProfile (ctx: any = null) {
   return request({
-    url: '/auth/me',
+    url: '/user',
     auth: true,
     method: 'get',
     context: ctx

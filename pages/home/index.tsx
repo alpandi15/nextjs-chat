@@ -95,33 +95,27 @@ const Home = () => {
                 <div className="date pb-2">
                   <div className="bg-blue-600 text-white text">Hari Ini</div>
                 </div>
-                {/* {
-                  UserData.map((val, key) => (
-                    <div key={key}> */}
-                      <div className="message">
-                        <div className="w-full flex justify-end pb-2 messages">
-                          <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
-                            <p className="inline-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, quibusdam! </p>
-                            <div className="times flex justify-end items-center">
-                              <span className="text-xs ml-2 inline-block">10.30</span>
-                              <div className="ml-1">
-                                <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-full flex justify-start pb-2 messages">
-                          <div className="bg-gray-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
-                            <p className="inline-block">yoi</p>
-                            <div className="times flex justify-end items-center">
-                              <span className="text-xs ml-2 inline-block">10.30</span>
-                            </div>
-                          </div>
+                <div className="message">
+                  <div className="w-full flex justify-end pb-2 messages">
+                    <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                      <p className="inline-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, quibusdam! </p>
+                      <div className="times flex justify-end items-center">
+                        <span className="text-xs ml-2 inline-block">10.30</span>
+                        <div className="ml-1">
+                          <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
                         </div>
                       </div>
-                    {/* </div>
-                  ))
-                } */}
+                    </div>
+                  </div>
+                  <div className="w-full flex justify-start pb-2 messages">
+                    <div className="bg-gray-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                      <p className="inline-block">yoi</p>
+                      <div className="times flex justify-end items-center">
+                        <span className="text-xs ml-2 inline-block">10.30</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </ScrollMessage>
