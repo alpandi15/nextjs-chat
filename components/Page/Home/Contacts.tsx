@@ -47,7 +47,7 @@ function ListContactFunction({
                   <div className="username">{val?.friend?.name}</div>
                   <div className="current-message">
                     <FontAwesomeIcon color="#919191" icon={faCheck} />
-                    <div style={{ marginLeft: '5px' }}>Udah kan ?</div>
+                    <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
                   </div>
                 </div>
               </ProfileImg>
