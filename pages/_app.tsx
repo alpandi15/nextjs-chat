@@ -1,6 +1,8 @@
 import type { AppProps, AppContext } from 'next/app'
 import { FC } from 'react'
 import Head from 'next/head'
+import { connect, Provider } from 'react-redux'
+import withRedux from 'next-redux-wrapper'
 import { config, dom } from "@fortawesome/fontawesome-svg-core"
 import { SyncLoader } from 'react-spinners'
 import { QueryClientProvider, QueryClient } from 'react-query'
@@ -10,6 +12,7 @@ import GlobalStyle from '../styles/GlobalStyle'
 import { apiGetProfile, logout } from '../services/auth'
 import ApplicationContext, { AppContextType, UserDataContext } from '../context/AppContext'
 import { useRouteState } from '../hook/useRouteState'
+import store from '../redux/store'
 import '../styles/tailwind.css'
 
 config.autoAddCss = false;
@@ -23,25 +26,27 @@ function MyApp({
   const routeState = useRouteState();
   return (
     <QueryClientProvider client={queryClient}>
-      <ApplicationContext.Provider
-        value={{
-          user,
-          logout
-        }}
-      >
-        <Head>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <style>{dom.css()}</style>
-        </Head>
-        <>
-          <Component {...pageProps} />
-          {routeState === "start" && (
-            <Preloader>{routeState}</Preloader>
-          )}
-        </>
-        <GlobalStyle />
-      </ApplicationContext.Provider>
-      {/* <ReactQueryDevtools /> */}
+      <Provider store={store}>
+        <ApplicationContext.Provider
+          value={{
+            user,
+            logout
+          }}
+        >
+          <Head>
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <style>{dom.css()}</style>
+          </Head>
+          <>
+            <Component {...pageProps} />
+            {routeState === "start" && (
+              <Preloader>{routeState}</Preloader>
+            )}
+          </>
+          <GlobalStyle />
+        </ApplicationContext.Provider>
+        {/* <ReactQueryDevtools /> */}
+      </Provider>
     </QueryClientProvider>
   )
 }
@@ -66,6 +71,9 @@ MyApp.getInitialProps = async ({Component, ctx}: AppContext) => {
   }
 }
 
+// const makeStore = () => {
+//   return store
+// }
 export default MyApp
 
 const Preloader: FC = () => (
