@@ -1,8 +1,8 @@
 import { request } from '../utils/request'
 
-export async function apiGetContact () {
+export async function apiGetProfileData (id: number) {
   return request({
-    url: '/contact',
+    url: `/message/user/${id}`,
     auth: true,
     method: 'get'
   })

@@ -6,9 +6,11 @@ import {
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import contactStore from './reducers/contactStore'
+import messageStore from './reducers/messageStore'
 
 const reducers = combineReducers({
-  contactStore
+  contactStore,
+  messageStore
 })
 
 const store = createStore(

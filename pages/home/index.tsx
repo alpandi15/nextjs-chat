@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withAuthSync } from '../../components/Security/auth'
 import { useAppContext } from '../../hook/useAppData'
+import { ListContact } from '../../components/Page/Home/Contacts'
 
 const UserData = [
   {id: 1, name: 'Pandi'},
@@ -50,27 +51,7 @@ const Home = () => {
               placeholder="Cari..."
             />
           </FormSearch>
-          <ContentListChat>
-            {
-              UserData.map((val, key) => (
-                <UserContact key={key}>
-                  <ProfileImg>
-                    <img src="/profile.png" alt=""/>
-                    <div>
-                      <div className="username">{val.name}</div>
-                      <div className="current-message">
-                        <FontAwesomeIcon color="#919191" icon={faCheck} />
-                        <div style={{ marginLeft: '5px' }}>Udah kan ?</div>
-                      </div>
-                    </div>
-                  </ProfileImg>
-                  <div style={{ fontSize: '11px' }}>
-                    20:30am
-                  </div>
-                </UserContact>
-              ))
-            }
-          </ContentListChat>
+          <ListContact />
         </LeftSide>
         <RightSide>
           <Header>
