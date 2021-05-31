@@ -31,7 +31,6 @@ function ListContactFunction({
   contacts
 }: any) {
   const [messageActive, setMessageActive] = useState(null)
-
   const { user, logout } = useAppContext()
 
   useEffect(() => {
