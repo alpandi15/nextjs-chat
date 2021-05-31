@@ -4,10 +4,11 @@ import {
   faCommentAlt,
   faCheck,
   faSignOutAlt,
-  faTimes
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from 'next/link'
+  faTimes,
+  faPaperPlane,
+  faSearch
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withAuthSync } from '../../components/Security/auth'
 import { useAppContext } from '../../hook/useAppData'
 
@@ -29,48 +30,39 @@ const Home = () => {
       <Content>
         <LeftSide>
           <Header>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ProfileImg>
-                <img src="/vercel.svg" alt=""/>
-              </ProfileImg>
-              <div style={{
-                padding: '0 8px',
-                fontSize: '14px',
-                fontWeight: 500
-              }}>{user?.name}</div>
-            </div>
+            <ProfileImg>
+              <img src="/profile.png" alt=""/>
+              <div className="username">{user?.name}</div>
+            </ProfileImg>
             <ActionContent>
-              <ButtonIcon><FontAwesomeIcon color="#4e4e4e" icon={faCommentAlt}/></ButtonIcon>
+              <ButtonIcon><FontAwesomeIcon color="#919191" icon={faCommentAlt}/></ButtonIcon>
               <ButtonIcon onClick={logout}>
-                <FontAwesomeIcon color="#4e4e4e" icon={faSignOutAlt}/>
+                <FontAwesomeIcon color="#919191" icon={faSignOutAlt}/>
               </ButtonIcon>
             </ActionContent>
           </Header>
-          <div style={{ padding: '10px', backgroundColor: 'rgb(247 247 247)' }}>
+          <FormSearch>
+            <div className="left-icon">
+              <FontAwesomeIcon color="#ededed" icon={faSearch} />
+            </div>
             <SearchBar
               placeholder="Cari..."
             />
-          </div>
+          </FormSearch>
           <ContentListChat>
             {
               UserData.map((val, key) => (
                 <UserContact key={key}>
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center'
-                  }}>
-                    <ProfileImg>
-                      <img src="/vercel.svg" alt=""/>
-                    </ProfileImg>
-                    <div style={{ margin: '0 10px' }}>
-                      <ContantName>{val.name}</ContantName>
-                      <Message>
-                        <FontAwesomeIcon color="4e4e4e" icon={faCheck} />
+                  <ProfileImg>
+                    <img src="/profile.png" alt=""/>
+                    <div>
+                      <div className="username">{val.name}</div>
+                      <div className="current-message">
+                        <FontAwesomeIcon color="#919191" icon={faCheck} />
                         <div style={{ marginLeft: '5px' }}>Udah kan ?</div>
-                      </Message>
+                      </div>
                     </div>
-                  </div>
+                  </ProfileImg>
                   <div style={{ fontSize: '11px' }}>
                     20:30am
                   </div>
@@ -81,36 +73,67 @@ const Home = () => {
         </LeftSide>
         <RightSide>
           <Header>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ProfileImg>
-                <img src="/vercel.svg" alt=""/>
-              </ProfileImg>
+            <ProfileImg>
+              <img src="/profile.png" alt=""/>
               <div style={{
                 padding: '0 8px'
               }}>
-                <div style={{
-                  fontSize: '14px',
-                  fontWeight: 500
-                }}>{user?.name}</div>
-                <div style={{ fontSize: '11px' }}>Online</div>
+                <div className="username">{user?.name}</div>
+                <div className="status">Online</div>
               </div>
-            </div>
+            </ProfileImg>
             <ActionContent>
               <ButtonIcon onClick={logout}>
-                <FontAwesomeIcon color="#4e4e4e" icon={faTimes}/>
+                <FontAwesomeIcon color="#919191" icon={faTimes}/>
               </ButtonIcon>
             </ActionContent>
           </Header>
-          <ContentMessages>
-            <Message>
-              Isi Pesan
-            </Message>
-            <FormSendMessage>
-              <SearchBar
-                placeholder="Tulis sesuatu..."
-              />
-            </FormSendMessage>
-          </ContentMessages>
+          <ScrollMessage className="overflow-auto flex flex-col-reverse">
+            <div className="wrapper w-full p-4">
+              <div className="content w-full">
+                <div className="date pb-2">
+                  <div className="bg-blue-600 text-white text">Hari Ini</div>
+                </div>
+                {/* {
+                  UserData.map((val, key) => (
+                    <div key={key}> */}
+                      <div className="message">
+                        <div className="w-full flex justify-end pb-2 messages">
+                          <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                            <p className="inline-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, quibusdam! </p>
+                            <div className="times flex justify-end items-center">
+                              <span className="text-xs ml-2 inline-block">10.30</span>
+                              <div className="ml-1 bg-blue-500 w-2 h-2 rounded-full inline-block"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-full flex justify-start pb-2 messages">
+                          <div className="bg-gray-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                            <p className="inline-block">yoi</p>
+                            <div className="times flex justify-end items-center">
+                              <span className="text-xs ml-2 inline-block">10.30</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {/* </div>
+                  ))
+                } */}
+              </div>
+            </div>
+          </ScrollMessage>
+          <FormSendMessage className="flex bottom-0 w-full">
+            <div className="w-full">
+              <form action="" className="py-2 px-3 w-full flex">
+                <InputMessage
+                  placeholder="Tulis sesuatu..."
+                />
+                <div className="right-icon">
+                  <FontAwesomeIcon color="#919191" icon={faPaperPlane} />
+                </div>
+              </form>
+            </div>
+          </FormSendMessage>
         </RightSide>
       </Content>
     </ContentLayout>
@@ -128,23 +151,23 @@ const ContentLayout = styled.div`
 const Content = styled.div`
   background-color: #FFF;
   width: 100%;
-  max-width: 80%;
+  max-width: 100%;
   min-width: 380px;
   display: flex;
-  height: 512px;
+  height: 100%;
   overflow: hidden;
 `
 const LeftSide = styled.div`
-  width: 35%;
+  width: 30%;
 `
 const RightSide = styled.div`
-  width: 65%;
+  width: 70%;
   border-left: 1px solid #cecece;
   position: relative;
 `
 const Header = styled.div`
   background: #dedede;
-  height: 70px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -152,13 +175,35 @@ const Header = styled.div`
   justify-content: space-between;
 `
 const ProfileImg = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  background: red;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .username {
+    font-size: 12px;
+    margin-left: 10px;
+    font-weight: 500;
+  }
+  
+  .status {
+    font-size: 11px;
+    margin-left: 10px;
+  }
+
+  .current-message {
+    margin-left: 10px;
+    font-size: 10px !important;
+    display: flex;
+    align-items: center;
+    padding: 0 !important;
+  }
 `
 const ActionContent = styled.div`
   display: flex;
@@ -166,20 +211,39 @@ const ActionContent = styled.div`
 `
 const ButtonIcon = styled.div`
   padding: 5px 10px;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
+`
+const FormSearch = styled.div`
+  padding: 5px 10px;
+  background-color: #ededed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .left-icon, .right-icon {
+    padding: 10px;
+  }
+
+  .left-icon {
+    position: absolute;
+    top: 2px;
+    left: 13px;
+  }
 `
 const SearchBar = styled.input`
   width: 100%;
-  height: 3rem;
-  border-radius: 5px;
-  padding: 15px;
+  height: 2.2rem;
+  border-radius: 30px;
+  padding: 0 15px;
   outline: none;
   font-size: 12px;
+  padding-left: 40px;
 `
 const ContentListChat = styled.div`
-  height: 374px;
-  max-height: 374px;
+  height: 536px;
+  max-height: 536px;
   overflow: hidden;
   overflow-y: scroll;
 `
@@ -191,22 +255,51 @@ const UserContact = styled.div`
   border-bottom: 1px solid #ececec;
   cursor: pointer;
 `
-const Message = styled.div`
-  font-size: 10px !important;
-  display: flex;
-  align-items: center;
-  padding: 0 !important;
+const InputMessage = styled.textarea`
+  width: 100%;
+  height: 3rem;
+  border-radius: 5px;
+  padding: 7px 10px;
+  outline: none;
+  font-size: 12px;
 `
-const ContantName = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-`
-const ContentMessages = styled.div`
+const ScrollMessage = styled.div`
+  height: calc(100vh - 122px);
+  .wrapper {
+    .content {
+      padding: 5px;
+      .date {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .text {
+          font-size: 12px;
+          padding: 2px 5px;
+          border-radius: 8px;
+        }
+      }
+
+      .message {
+        .times {
+          span {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+  }
 `
 const FormSendMessage = styled.div`
-  padding: 10px;
-  background-color: rgb(247 247 247);
-  position: absolute;
-  width: 100%;
-  bottom: 0;
+  // padding: 10px;
+  background-color: #ececec;
+  // position: absolute;
+  // width: 100%;
+  // bottom: 0;
+  // display: flex;
+  // align-items: center;
+
+  .right-icon, .right-icon {
+    padding: 10px;
+  }
 `
