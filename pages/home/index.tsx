@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {
   faCommentAlt,
   faCheck,
+  faCheckDouble,
   faSignOutAlt,
   faTimes,
   faPaperPlane,
@@ -103,7 +104,9 @@ const Home = () => {
                             <p className="inline-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, quibusdam! </p>
                             <div className="times flex justify-end items-center">
                               <span className="text-xs ml-2 inline-block">10.30</span>
-                              <div className="ml-1 bg-blue-500 w-2 h-2 rounded-full inline-block"></div>
+                              <div className="ml-1">
+                                <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
+                              </div>
                             </div>
                           </div>
                         </div>
