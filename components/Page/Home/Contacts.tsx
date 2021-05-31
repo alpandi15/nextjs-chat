@@ -8,7 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData } from '../../../redux/actions/contact'
-import { getProfileData } from '../../../redux/actions/message'
+import {
+  getProfileData,
+  getMessageData
+} from '../../../redux/actions/message'
 import {
   Header,
   ProfileImg,
@@ -24,6 +27,7 @@ import { useAppContext } from '../../../hook/useAppData'
 function ListContactFunction({
   getContactsData,
   getProfileData,
+  getMessageData,
   contacts
 }: any) {
   const [messageActive, setMessageActive] = useState(null)
@@ -38,7 +42,6 @@ function ListContactFunction({
   }, [])
 
   const clickFriend = async (contactId: number) => {
-
     let contactMessage = contacts.filter((v: { id: any }) => {
       return v.id == contactId;
     })
@@ -47,6 +50,7 @@ function ListContactFunction({
     console.log('ID ', contactMessage, friend_id)
     if(friend_id.status && messageActive !== friend_id.id){
       await getProfileData(friend_id.id)
+      await getMessageData(friend_id?.id)
       setMessageActive(friend_id.id)
     }
   }
@@ -114,7 +118,8 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   getContactsData: () => dispatch(getContactsData()),
-  getProfileData: (id: number) => dispatch(getProfileData(id))
+  getProfileData: (id: number) => dispatch(getProfileData(id)),
+  getMessageData: (data: any) => dispatch(getMessageData(data))
 })
 
 export const ListContact = connect(mapStateToProps, mapDispatchToProps)(ListContactFunction)

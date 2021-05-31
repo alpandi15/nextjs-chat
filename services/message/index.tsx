@@ -8,3 +8,11 @@ export async function apiGetProfileData (id: number) {
   })
 }
 
+export async function apiGetMessege (id: number) {
+  return request({
+    url: `/message/${id}`,
+    auth: true,
+    method: 'get'
+  })
+}
+

@@ -16,10 +16,35 @@ import {
   FormSendMessage,
   InputMessage
 } from './styles'
+import { useAppContext } from '../../../hook/useAppData'
 
 function MessageFunction({
-  profile
+  profile,
+  groupSortMessage
 }: any) {
+  const { user } = useAppContext()
+  const getDateFunction = (date: Date) => {
+    var d = date; 
+    let month = d.getMonth()+1; 
+    let day = d.getDate(); 
+    let output = ((""+day).length<2 ? "0" : "") + day + "/" + ((""+month).length<2 ? '0' : "") + month + "/" + d.getFullYear()
+    return output
+  }
+
+  // const checkDate = (date: string) => {
+  //   let today = getDateFunction(new Date())
+  //   let yesterday = new Date()
+  //   yesterday.setDate(yesterday.getDate() - 1)
+  //   yesterday = getDateFunction(yesterday)
+  //   if(today === date){
+  //     return 'hari ini'
+  //   }else if(yesterday === date){
+  //     return 'kemarin'
+  //   }else{
+  //     return date
+  //   }   
+  // }
+
   if (profile?.id) {
     return (
       <>
@@ -42,30 +67,44 @@ function MessageFunction({
         <ScrollMessage className="overflow-auto flex flex-col-reverse">
           <div className="wrapper w-full p-4">
             <div className="content w-full">
-              <div className="date pb-2">
-                <div className="bg-blue-600 text-white text">Hari Ini</div>
-              </div>
-              <div className="message">
-                <div className="w-full flex justify-end pb-2 messages">
-                  <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
-                    <p className="inline-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, quibusdam! </p>
-                    <div className="times flex justify-end items-center">
-                      <span className="text-xs ml-2 inline-block">10.30</span>
-                      <div className="ml-1">
-                        <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
-                      </div>
+              {
+                Object.keys(groupSortMessage)?.map((group) => (
+                  <div key={group}>
+                    <div className="date pb-2">
+                      <div className="bg-blue-600 text-white text">{group}</div>
                     </div>
+                    {
+                      groupSortMessage[group].map((message: any) => {
+                        if (user?.id === message?.pengirim) {
+                          return (
+                            <div className="w-full flex justify-end pb-2 messages" key={message?.id}>
+                              <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                                <p className="inline-block">{message?.message}</p>
+                                <div className="times flex justify-end items-center">
+                                  <span className="text-xs ml-2 inline-block">{message.time}</span>
+                                  <div className="ml-1">
+                                    <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        }
+                        return (
+                          <div className="w-full flex justify-start pb-2 messages" key={message?.id}>
+                            <div className="bg-gray-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                              <p className="inline-block">{message?.message}</p>
+                              <div className="times flex justify-end items-center">
+                                <span className="text-xs ml-2 inline-block">{message?.time}</span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
                   </div>
-                </div>
-                <div className="w-full flex justify-start pb-2 messages">
-                  <div className="bg-gray-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
-                    <p className="inline-block">yoi</p>
-                    <div className="times flex justify-end items-center">
-                      <span className="text-xs ml-2 inline-block">10.30</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                ))
+              }
             </div>
           </div>
         </ScrollMessage>
@@ -92,7 +131,9 @@ const mapStateToProps = (state: any) => {
     messageStore
   } = state
   return {
-    profile: messageStore?.profile
+    profile: messageStore?.profile,
+    messages: messageStore?.messages,
+    groupSortMessage: messageStore?.groupSortMessage
   }
 }
 
