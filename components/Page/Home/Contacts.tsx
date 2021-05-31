@@ -94,7 +94,7 @@ function ListContactFunction({
                     </div>
                   </ProfileImg>
                   <div style={{ fontSize: '11px' }}>
-                    20:30am
+                    {val?.friend?.terakhir_dilihat}
                   </div>
                 </UserContact>
               )

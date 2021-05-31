@@ -50,9 +50,9 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       // groupkan
       let keyGroup = 'created_at'
       messages = messages.reduce(function (r, a) {
-          r[a[keyGroup].split(' ')[0]] = r[a[keyGroup].split(' ')[0]] || [];
-          r[a[keyGroup].split(' ')[0]].push(a);
-          return r;
+        r[String(a[keyGroup]).split(' ')[0]] = r[String(a[keyGroup]).split(' ')[0]] || [];
+        r[String(a[keyGroup]).split(' ')[0]].push(a);
+        return r;
       }, Object.create(null));
       return {
         ...state,

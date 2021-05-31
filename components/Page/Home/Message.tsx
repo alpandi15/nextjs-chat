@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import {
   faCheck,
   faTimes,
+  faCheckDouble,
   faPaperPlane
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -23,7 +24,7 @@ function MessageFunction({
   groupSortMessage
 }: any) {
   const { user } = useAppContext()
-  const getDateFunction = (date: Date) => {
+  const getDateFunction = (date: any) => {
     var d = date; 
     let month = d.getMonth()+1; 
     let day = d.getDate(); 
@@ -31,19 +32,19 @@ function MessageFunction({
     return output
   }
 
-  // const checkDate = (date: string) => {
-  //   let today = getDateFunction(new Date())
-  //   let yesterday = new Date()
-  //   yesterday.setDate(yesterday.getDate() - 1)
-  //   yesterday = getDateFunction(yesterday)
-  //   if(today === date){
-  //     return 'hari ini'
-  //   }else if(yesterday === date){
-  //     return 'kemarin'
-  //   }else{
-  //     return date
-  //   }   
-  // }
+  const checkDate = (date: any) => {
+    let today = getDateFunction(new Date())
+    let yesterday: any = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    yesterday = getDateFunction(yesterday)
+    if(today === date){
+      return 'Hari ini'
+    }else if(yesterday === date){
+      return 'Kemarin'
+    }else{
+      return date
+    }   
+  }
 
   if (profile?.id) {
     return (
@@ -71,19 +72,25 @@ function MessageFunction({
                 Object.keys(groupSortMessage)?.map((group) => (
                   <div key={group}>
                     <div className="date pb-2">
-                      <div className="bg-blue-600 text-white text">{group}</div>
+                      <div className="bg-blue-600 text-white text">{checkDate(group)}</div>
                     </div>
                     {
                       groupSortMessage[group].map((message: any) => {
                         if (user?.id === message?.pengirim) {
                           return (
                             <div className="w-full flex justify-end pb-2 messages" key={message?.id}>
-                              <div className="bg-green-200 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
+                              <div className="bg-green-100 py-1 px-2 text-xs rounded-b-lg rounded-tl-lg text-black">
                                 <p className="inline-block">{message?.message}</p>
                                 <div className="times flex justify-end items-center">
                                   <span className="text-xs ml-2 inline-block">{message.time}</span>
                                   <div className="ml-1">
-                                    <FontAwesomeIcon className="text-blue-500" icon={faCheck} />
+                                    {
+                                      message?.read_at === null ? (
+                                        <FontAwesomeIcon className="text-gray-400" icon={faCheckDouble} />
+                                      ) : (
+                                        <FontAwesomeIcon className="text-green-500" icon={faCheckDouble} />
+                                      )
+                                    }
                                   </div>
                                 </div>
                               </div>
