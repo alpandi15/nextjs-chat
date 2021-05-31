@@ -1,12 +1,25 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import {
-  faCheck
+  faCheck,
+  faCommentAlt,
+  faSignOutAlt,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData } from '../../../redux/actions/contact'
 import { getProfileData } from '../../../redux/actions/message'
+import {
+  Header,
+  ProfileImg,
+  ActionContent,
+  ButtonIcon,
+  FormSearch,
+  SearchBar,
+  ContentListChat,
+  UserContact
+} from './styles'
+import { useAppContext } from '../../../hook/useAppData'
 
 function ListContactFunction({
   getContactsData,
@@ -14,6 +27,9 @@ function ListContactFunction({
   contacts
 }: any) {
   const [messageActive, setMessageActive] = useState(null)
+
+  const { user, logout } = useAppContext()
+
   useEffect(() => {
     const fetch = async () => {
       await getContactsData()
@@ -36,29 +52,54 @@ function ListContactFunction({
   }
 
   return (
-    <ContentListChat>
-      {
-        contacts?.map((val: any, key: number) => {
-          return (
-            <UserContact key={key} onClick={() => clickFriend(val?.id)}>
-              <ProfileImg>
-                <img src="/profile.png" alt=""/>
-                <div>
-                  <div className="username">{val?.friend?.name}</div>
-                  <div className="current-message">
-                    <FontAwesomeIcon color="#919191" icon={faCheck} />
-                    <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+    <>
+      <Header>
+        <ProfileImg>
+          <img src="/profile.png" alt=""/>
+          <div className="username">{user?.name}</div>
+        </ProfileImg>
+        <ActionContent>
+          <ButtonIcon><FontAwesomeIcon color="#919191" icon={faCommentAlt}/></ButtonIcon>
+          <ButtonIcon onClick={logout}>
+            <FontAwesomeIcon color="#919191" icon={faSignOutAlt}/>
+          </ButtonIcon>
+        </ActionContent>
+      </Header>
+      <FormSearch>
+        <div className="left-icon">
+          <FontAwesomeIcon color="#ededed" icon={faSearch} />
+        </div>
+        <SearchBar
+          placeholder="Cari..."
+        />
+      </FormSearch>
+      <ContentListChat>
+        {
+          contacts?.map((val: any, key: number) => {
+            if (val?.status === 'diterima') {
+              return (
+                <UserContact key={key} onClick={() => clickFriend(val?.id)}>
+                  <ProfileImg>
+                    <img src="/profile.png" alt=""/>
+                    <div>
+                      <div className="username">{val?.friend?.name}</div>
+                      <div className="current-message">
+                        <FontAwesomeIcon color="#919191" icon={faCheck} />
+                        <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                      </div>
+                    </div>
+                  </ProfileImg>
+                  <div style={{ fontSize: '11px' }}>
+                    20:30am
                   </div>
-                </div>
-              </ProfileImg>
-              <div style={{ fontSize: '11px' }}>
-                20:30am
-              </div>
-            </UserContact>
-          )
-        })
-      }
-  </ContentListChat>
+                </UserContact>
+              )
+            }
+            return
+          })
+        }
+      </ContentListChat>
+    </>
   )
 }
 
@@ -77,49 +118,3 @@ const mapDispatchToProps = (dispatch: any) => ({
 })
 
 export const ListContact = connect(mapStateToProps, mapDispatchToProps)(ListContactFunction)
-
-const ContentListChat = styled.div`
-  height: 536px;
-  max-height: 536px;
-  overflow: hidden;
-  overflow-y: scroll;
-`
-const UserContact = styled.div`
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ececec;
-  cursor: pointer;
-`
-const ProfileImg = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .username {
-    font-size: 12px;
-    margin-left: 10px;
-    font-weight: 500;
-  }
-  
-  .status {
-    font-size: 11px;
-    margin-left: 10px;
-  }
-
-  .current-message {
-    margin-left: 10px;
-    font-size: 10px !important;
-    display: flex;
-    align-items: center;
-    padding: 0 !important;
-  }
-`

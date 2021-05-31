@@ -22,7 +22,7 @@ const initialState: InitialProps = {
   contactProsess: [],
 }
 
-export default (state: InitialProps = initialState, action: ActionProps = {}) => {
+const contactStore = (state: InitialProps = initialState, action: ActionProps = {}) => {
   switch (action.type) {
     case SET_CONTACT_DATA:
       return {
@@ -43,3 +43,5 @@ export default (state: InitialProps = initialState, action: ActionProps = {}) =>
       return state
   }
 }
+
+export default contactStore

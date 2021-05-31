@@ -19,7 +19,7 @@ const initialState: InitialProps = {
   groupSortMessage: {}
 }
 
-export default (state: InitialProps = initialState, action: ActionProps) => {
+const messageStore = (state: InitialProps = initialState, action: ActionProps) => {
   switch (action.type) {
     case SET_PROFILE_DATA:
       return {
@@ -30,3 +30,5 @@ export default (state: InitialProps = initialState, action: ActionProps) => {
       return state
   }
 }
+
+export default messageStore
