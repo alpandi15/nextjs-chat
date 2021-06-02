@@ -28,7 +28,7 @@ const setMessageDispatch = (messages: any) => {
   }
 }
 
-const setSortMessageDispatch = (status: string) => {
+export const setSortMessageDispatch = (status: string) => {
   return {
     type: sortMessage,
     payload: {
@@ -94,6 +94,7 @@ export const addSetMessageData = (message: any, user: UserDataContext) => async 
     }
     console.log('UPDATE MESSAGE DATA ', dataChange)
     dispatch(addMessageDispatch(dataChange))
+    dispatch(setSortMessageDispatch('timestamp'))
   } catch (error) {
     console.log(error)
   }

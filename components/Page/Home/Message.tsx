@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import {
   // faCheck,
   faTimes,
@@ -7,7 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData } from '../../../redux/actions/contact'
-import { getProfileData, addSetMessageData } from '../../../redux/actions/message'
+import {
+  getProfileData,
+  addSetMessageData,
+  setSortMessageDispatch
+} from '../../../redux/actions/message'
 import {
   Header,
   ProfileImg,
@@ -28,6 +32,8 @@ function MessageFunction({
   addSetMessageData
 }: any) {
   const { user, notification } = useAppContext()
+  const dispatch = useDispatch()
+
   const getDateFunction = (date: any) => {
     var d = date; 
     let month = d.getMonth()+1; 
@@ -67,10 +73,11 @@ function MessageFunction({
             // console.log('diterima pesannya bro');
           }
         }
-        // else if(message.status === 'updated'){
-        //   this.UPDATE_MESSAGE_DATA(message)
-        //   this.sortMessage('timestamp')
-        // }
+        else if(message.status === 'updated'){
+          // this.UPDATE_MESSAGE_DATA(message)
+          console.log('UPDATE DATA CHATTING ', message)
+          dispatch(setSortMessageDispatch('timestamp'))
+        }
       }
     })()
   }, [
