@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import Pusher from 'pusher-js'
 
 type ImageUrlType = {
   url?: string,
@@ -33,12 +34,15 @@ export interface UserDataContext {
 
 export type AppContextType = {
   user: UserDataContext,
-  logout?: () => void
+  logout?: () => void,
+  pusher?: Pusher | undefined,
+  notification: any | null
 }
 
 const initialData = {
   user: {},
-  logout: () => {}
+  logout: () => {},
+  notification: {}
 }
 const AppContext = createContext<AppContextType>(initialData)
 

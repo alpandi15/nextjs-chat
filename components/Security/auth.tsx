@@ -114,7 +114,7 @@ export const loggedChecked = (WrappedComponent: NextComponentType) => class exte
     && (await WrappedComponent.getInitialProps(ctx))
 
     const token = isLogged(ctx)
-    console.log('IS LOGGED')
+    console.log('IS LOGGED ', componentProps)
     return { ...componentProps, token }
   }
 

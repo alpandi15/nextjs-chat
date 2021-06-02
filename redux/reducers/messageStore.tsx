@@ -39,9 +39,9 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       messages.sort((a, b) => {
         let compare = 0;
         if (a[action?.payload?.status] > b[action?.payload?.status]) {
-            compare = 1;
+          compare = 1;
         } else if (b[action?.payload?.status] > a[action?.payload?.status]) {
-            compare = -1;
+          compare = -1;
         }
         return compare;
       });

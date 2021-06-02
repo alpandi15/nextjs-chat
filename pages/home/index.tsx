@@ -8,8 +8,22 @@ import {
   LeftSide,
   RightSide
 } from '../../components/Page/Home/styles'
+// import { useAppContext } from '../../hook/useAppData'
 
 const Home = () => {
+  // const { pusher, user } = useAppContext()
+  // React.useEffect(() => {
+  //   console.log('WINDOW ', pusher)
+  //   if (pusher) {
+  //     const channel = pusher.subscribe(`private-App.Models.User.${user?.id}`)
+  //     .bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated',
+  //     (data: any) => {
+  //       console.log('RECEIVED ', data)
+  //     })
+  //     console.log('Channel ', channel)
+  //   }
+  // }, [pusher])
+
   return (
     <ContentLayout>
       <Content>

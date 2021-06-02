@@ -1,5 +1,6 @@
 import {
-  SET_CONTACT_DATA
+  SET_CONTACT_DATA,
+  UPDATE_MESSAGE_TERAKHIR_DIMENU_USER
   // UPDATE_STATUS_USER_DIMENU_USER
 } from '../type'
 
@@ -9,7 +10,7 @@ interface ActionProps {
 }
 
 type InitialProps = {
-  contacts?: [] | undefined,
+  contacts?: string[],
   contactKonfirmasi?: [],
   contactTolak?: [],
   contactProsess?: [],
@@ -39,6 +40,44 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
     //     ...state
     //     // contacts
     //   }
+    case UPDATE_MESSAGE_TERAKHIR_DIMENU_USER:
+      const { payload } = action
+
+      if (state?.contacts !== undefined) {
+        const mapingContact = state?.contacts.map((val: any) => {
+          if (val?.friend.id === payload?.data?.pengirim) {
+            return {
+              ...val,
+              friend: {
+                ...val.friend,
+                as_pesan: payload?.data?.as_pesan,
+                read_at: payload?.data?.read_at,
+                pesan_terakhir: payload?.data?.pesan_terakhir
+              }
+            }
+          } else if (val?.friend.id === payload?.data?.penerima) {
+            return {
+              ...val,
+              friend: {
+                ...val.friend,
+                as_pesan: payload?.data?.as_pesan,
+                read_at: payload?.data?.read_at,
+                pesan_terakhir: payload?.data?.pesan_terakhir
+              }
+            }
+          }
+          return val
+        })
+
+        return {
+          ...state,
+          contacts: mapingContact
+        }
+      }
+
+      return {
+        ...state
+      }
     default:
       return state
   }

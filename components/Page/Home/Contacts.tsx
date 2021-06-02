@@ -7,7 +7,7 @@ import {
   faSearch
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { getContactsData } from '../../../redux/actions/contact'
+import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
 import {
   getProfileData,
   getMessageData
@@ -23,15 +23,17 @@ import {
   UserContact
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
+import { UserDataContext } from 'context/AppContext'
 
 function ListContactFunction({
   getContactsData,
   getProfileData,
   getMessageData,
+  updateMessageContact,
   contacts
 }: any) {
   const [messageActive, setMessageActive] = useState(null)
-  const { user, logout } = useAppContext()
+  const { user, logout, notification } = useAppContext()
 
   useEffect(() => {
     const fetch = async () => {
@@ -39,6 +41,15 @@ function ListContactFunction({
     }
     fetch()
   }, [])
+
+  useEffect(() => {
+    (async () => {
+      console.log('TERIMA ', notification)
+      if(notification?.message !== undefined) {
+        await updateMessageContact(notification?.message, user)
+      }
+    })()
+  }, [notification])
 
   const clickFriend = async (contactId: number) => {
     let contactMessage = contacts.filter((v: { id: any }) => {
@@ -118,7 +129,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => ({
   getContactsData: () => dispatch(getContactsData()),
   getProfileData: (id: number) => dispatch(getProfileData(id)),
-  getMessageData: (data: any) => dispatch(getMessageData(data))
+  getMessageData: (data: any) => dispatch(getMessageData(data)),
+  updateMessageContact: (data: any, user: UserDataContext) => dispatch(updateMessageContact(data, user))
 })
 
 export const ListContact = connect(mapStateToProps, mapDispatchToProps)(ListContactFunction)

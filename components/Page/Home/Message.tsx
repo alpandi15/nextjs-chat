@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {
-  faCheck,
+  // faCheck,
   faTimes,
   faCheckDouble,
   faPaperPlane

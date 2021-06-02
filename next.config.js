@@ -15,6 +15,8 @@ module.exports = {
     API_IMAGE: process.env.API_IMAGE || 'localhost',
     API_IMAGE_PORT: process.env.API_IMAGE_PORT || '3000',
     API_IMAGE_VERSION: process.env.API_IMAGE_VERSION || '',
+
+    PUSHER_KEY: process.env.PUSHER_KEY || '',
   },
   publicRuntimeConfig: {
     API_URL: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/${process.env.API_VERSION}`,
@@ -36,6 +38,7 @@ module.exports = {
     config.resolve.alias['@/constants'] = path.join(__dirname, 'constants')
     config.resolve.alias['@/services'] = path.join(__dirname, 'services')
     config.resolve.extensions = ['.ts', '.tsx', '.js']
+
     return config
   }
 }
