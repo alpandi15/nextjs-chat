@@ -2,6 +2,7 @@ import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
   ADD_MESSAGE_DATA,
+  UPDATE_MESSAGE_DATA,
   sortMessage
 } from '../type'
 
@@ -65,6 +66,22 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       return {
         ...state,
         messages: updateMessage
+      }
+    case UPDATE_MESSAGE_DATA:
+      const mapingMessage = state?.messages.map((val: any) => {
+        if (val?.id === action?.payload?.messages?.id) {
+          return {
+            ...val,
+            read_at: action?.payload?.messages?.read_at
+          }
+        }
+        return val
+      })
+
+      console.log('MAPING MESSAGE ', mapingMessage, state?.messages)
+      return {
+        ...state,
+        messages: mapingMessage
       }
     default:
       return state

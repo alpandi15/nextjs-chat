@@ -2,7 +2,8 @@ import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
   sortMessage,
-  ADD_MESSAGE_DATA
+  ADD_MESSAGE_DATA,
+  UPDATE_MESSAGE_DATA
 } from '../type'
 import {
   apiGetProfileData,
@@ -40,6 +41,15 @@ export const setSortMessageDispatch = (status: string) => {
 const addMessageDispatch = (messages: any) => {
   return {
     type: ADD_MESSAGE_DATA,
+    payload: {
+      messages
+    }
+  }
+}
+
+export const updateMessageDataDispatch = (messages: any) => {
+  return {
+    type: UPDATE_MESSAGE_DATA,
     payload: {
       messages
     }

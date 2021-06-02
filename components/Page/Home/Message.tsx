@@ -10,7 +10,8 @@ import { getContactsData } from '../../../redux/actions/contact'
 import {
   getProfileData,
   addSetMessageData,
-  setSortMessageDispatch
+  setSortMessageDispatch,
+  updateMessageDataDispatch
 } from '../../../redux/actions/message'
 import {
   Header,
@@ -76,6 +77,7 @@ function MessageFunction({
         else if(message.status === 'updated'){
           // this.UPDATE_MESSAGE_DATA(message)
           console.log('UPDATE DATA CHATTING ', message)
+          dispatch(updateMessageDataDispatch(message))
           dispatch(setSortMessageDispatch('timestamp'))
         }
       }
