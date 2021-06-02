@@ -16,3 +16,10 @@ export async function apiGetMessege (id: number) {
   })
 }
 
+export async function readMessageData (id: number) {
+  return request({
+    url: `/message/read-message/${id}`,
+    auth: true,
+    method: 'get'
+  })
+}

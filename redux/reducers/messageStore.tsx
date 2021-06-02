@@ -1,6 +1,7 @@
 import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
+  ADD_MESSAGE_DATA,
   sortMessage
 } from '../type'
 
@@ -46,7 +47,6 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         return compare;
       });
 
-      console.log('MESSAGES ', messages)
       // groupkan
       let keyGroup = 'created_at'
       messages = messages.reduce(function (r, a) {
@@ -57,6 +57,14 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       return {
         ...state,
         groupSortMessage: messages
+      }
+    case ADD_MESSAGE_DATA:
+      let updateMessage: [] = state.messages || []
+      updateMessage.push(action?.payload?.messages)
+      console.log('UPDATE ', updateMessage)
+      return {
+        ...state,
+        messages: updateMessage
       }
     default:
       return state

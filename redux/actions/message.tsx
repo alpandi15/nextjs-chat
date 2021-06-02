@@ -1,12 +1,14 @@
 import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
-  sortMessage
+  sortMessage,
+  ADD_MESSAGE_DATA
 } from '../type'
 import {
   apiGetProfileData,
   apiGetMessege
 } from '../../services/message'
+import { UserDataContext } from 'context/AppContext'
 
 const commit = (data: any) => {
   return {
@@ -31,6 +33,15 @@ const setSortMessageDispatch = (status: string) => {
     type: sortMessage,
     payload: {
       status
+    }
+  }
+}
+
+const addMessageDispatch = (messages: any) => {
+  return {
+    type: ADD_MESSAGE_DATA,
+    payload: {
+      messages
     }
   }
 }
@@ -67,5 +78,23 @@ export const getMessageData = (id: number) => async (dispatch: any) => {
     }
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const addSetMessageData = (message: any, user: UserDataContext) => async (dispatch: any) => {
+  try {
+    let dataChange = {
+      id: message?.id,
+      message: message?.pesan,
+      timestamp: message?.timestamp,
+      created_at: message?.created_at,
+      read_at: message?.read_at,
+      time: message?.time,
+      as: user.id === message?.pengirim ? 'pengirim' : 'penerima'
+    }
+    console.log('UPDATE MESSAGE DATA ', dataChange)
+    dispatch(addMessageDispatch(dataChange))
+  } catch (error) {
+    console.log(error)
   }
 }

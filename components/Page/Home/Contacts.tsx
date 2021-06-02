@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import {
-  faCheck,
+  faCheckDouble,
   faCommentAlt,
   faSignOutAlt,
   faSearch
@@ -98,8 +98,29 @@ function ListContactFunction({
                     <div>
                       <div className="username">{val?.friend?.name}</div>
                       <div className="current-message">
-                        <FontAwesomeIcon color="#919191" icon={faCheck} />
-                        <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                        {
+                          val?.friend?.as_pesan === 'pengirim'
+                          ? val?.friend?.read_at === null ? (
+                            <>
+                              <FontAwesomeIcon className="text-gray-400" icon={faCheckDouble} />
+                              <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                            </>
+                          ) : (
+                            <>
+                              <FontAwesomeIcon className="text-green-500" icon={faCheckDouble} />
+                              <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                            </>
+                          )
+                          : val?.friend?.read_at === null ? (
+                            <>
+                              <div style={{ fontWeight: 600 }}>{val?.friend?.pesan_terakhir}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div>{val?.friend?.pesan_terakhir}</div>
+                            </>
+                          )
+                        }
                       </div>
                     </div>
                   </ProfileImg>

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData } from '../../../redux/actions/contact'
-import { getProfileData } from '../../../redux/actions/message'
+import { getProfileData, addSetMessageData } from '../../../redux/actions/message'
 import {
   Header,
   ProfileImg,
@@ -18,12 +18,16 @@ import {
   InputMessage
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
+import { useEffect } from 'react'
+import { UserDataContext } from 'context/AppContext'
+import { readMessageData } from '../../../services/message'
 
 function MessageFunction({
   profile,
-  groupSortMessage
+  groupSortMessage,
+  addSetMessageData
 }: any) {
-  const { user } = useAppContext()
+  const { user, notification } = useAppContext()
   const getDateFunction = (date: any) => {
     var d = date; 
     let month = d.getMonth()+1; 
@@ -45,6 +49,35 @@ function MessageFunction({
       return date
     }   
   }
+
+  useEffect(() => {
+    (async () => {
+      console.log('TERIMA MESSAGE ', notification)
+      if(notification?.message !== undefined) {
+        const { message } = notification
+        if(message.status === 'created'){
+          console.log('PROFILE ', user, profile, message)
+          if(Number(profile.id) === Number(message.penerima) || (Number(message.penerima) === Number(user.id) && Number(profile.id) === Number(message.pengirim))){
+            console.log('DATA DI KIRIM ', message)
+            addSetMessageData(message, user)
+          }
+          if(Number(message.penerima) === Number(user.id) && (Number(message.pengirim) === Number(profile.id))) {
+            console.log('DATA DI READ ', message)
+            readMessageData(profile.id)
+            // console.log('diterima pesannya bro');
+          }
+        }
+        // else if(message.status === 'updated'){
+        //   this.UPDATE_MESSAGE_DATA(message)
+        //   this.sortMessage('timestamp')
+        // }
+      }
+    })()
+  }, [
+    notification,
+    user,
+    profile
+  ])
 
   if (profile?.id) {
     return (
@@ -146,7 +179,8 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   getContactsData: () => dispatch(getContactsData()),
-  getProfileData: (id: number) => dispatch(getProfileData(id))
+  getProfileData: (id: number) => dispatch(getProfileData(id)),
+  addSetMessageData: (message: any, user: UserDataContext) => dispatch(addSetMessageData(message, user))
 })
 
 export const MessageConversation = connect(mapStateToProps, mapDispatchToProps)(MessageFunction)
