@@ -1,5 +1,8 @@
 import { connect, useDispatch } from 'react-redux'
 import {
+  useForm
+} from 'react-hook-form'
+import {
   // faCheck,
   faTimes,
   faCheckDouble,
@@ -25,7 +28,11 @@ import {
 import { useAppContext } from '../../../hook/useAppData'
 import { useEffect } from 'react'
 import { UserDataContext } from 'context/AppContext'
-import { readMessageData } from '../../../services/message'
+import { readMessageData, apiAddMessageData } from '../../../services/message'
+
+type FormInputProps = {
+  messages: string
+}
 
 function MessageFunction({
   profile,
@@ -34,6 +41,12 @@ function MessageFunction({
 }: any) {
   const { user, notification } = useAppContext()
   const dispatch = useDispatch()
+
+  const {
+    register,
+    handleSubmit,
+    reset
+  } = useForm<FormInputProps>()
 
   const getDateFunction = (date: any) => {
     var d = date; 
@@ -87,6 +100,14 @@ function MessageFunction({
     user,
     profile
   ])
+
+  const onSubmit = async (data: FormInputProps) => {
+    console.log(data)
+    reset()
+    await apiAddMessageData(profile?.id, {
+      pesan: data?.messages
+    })
+  }
 
   if (profile?.id) {
     return (
@@ -159,13 +180,14 @@ function MessageFunction({
         </ScrollMessage>
         <FormSendMessage className="flex bottom-0 w-full">
           <div className="w-full">
-            <form action="" className="py-2 px-3 w-full flex">
+            <form onSubmit={handleSubmit(onSubmit)} className="py-2 px-3 w-full flex">
               <InputMessage
                 placeholder="Tulis sesuatu..."
+                {...register('messages')}
               />
-              <div className="right-icon">
+              <button className="right-icon">
                 <FontAwesomeIcon color="#919191" icon={faPaperPlane} />
-              </div>
+              </button>
             </form>
           </div>
         </FormSendMessage>

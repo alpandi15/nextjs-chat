@@ -23,3 +23,12 @@ export async function readMessageData (id: number) {
     method: 'get'
   })
 }
+
+export async function apiAddMessageData (id: number, data: any) {
+  return request({
+    url: `/message/${id}`,
+    auth: true,
+    method: 'post',
+    data
+  })
+}

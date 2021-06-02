@@ -157,6 +157,11 @@ background-color: #ececec;
 // display: flex;
 // align-items: center;
 
+button {
+  :focus {
+    outline: none;
+  }
+}
 .right-icon, .right-icon {
   padding: 10px;
 }
