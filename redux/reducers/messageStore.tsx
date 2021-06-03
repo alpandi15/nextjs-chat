@@ -60,7 +60,7 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         groupSortMessage: messages
       }
     case ADD_MESSAGE_DATA:
-      let updateMessage: [] = state.messages || []
+      let updateMessage: string[] = state.messages || []
       updateMessage.push(action?.payload?.messages)
       console.log('UPDATE ', updateMessage)
       return {
