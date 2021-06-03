@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
@@ -9,6 +10,7 @@ import {
   apiGetProfileData,
   apiGetMessege
 } from '../../services/message'
+import { generateUuid } from '../../services/utils/uuid'
 import { UserDataContext } from 'context/AppContext'
 
 const commit = (data: any) => {
@@ -91,18 +93,20 @@ export const getMessageData = (id: number) => async (dispatch: any) => {
   }
 }
 
-export const addSetMessageData = (message: any, user: UserDataContext) => async (dispatch: any) => {
+export const addSetMessageData = (data: any, user: UserDataContext) => async (dispatch: any) => {
   try {
+    let uuid = await generateUuid()
     let dataChange = {
-      id: message?.id,
-      message: message?.pesan,
-      timestamp: message?.timestamp,
-      created_at: message?.created_at,
-      read_at: message?.read_at,
-      time: message?.time,
-      as: user.id === message?.pengirim ? 'pengirim' : 'penerima'
+      id: data?.id || uuid,
+      client_ref_id: data?.client_ref_id,
+      message: data?.pesan,
+      timestamp: data?.timestamp || new Date().getTime(),
+      created_at: data?.created_at || moment().format('DD/MM/YYYY HH:mm'),
+      read_at: data?.read_at || null,
+      time: data?.time || moment().format('HH:mm'),
+      pengirim: data?.pengirim || user?.id
     }
-    console.log('UPDATE MESSAGE DATA ', dataChange)
+    console.log('ADD MESSAGE DATA ', dataChange)
     dispatch(addMessageDispatch(dataChange))
     dispatch(setSortMessageDispatch('timestamp'))
   } catch (error) {

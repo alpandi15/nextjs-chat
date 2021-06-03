@@ -29,6 +29,7 @@ import { useAppContext } from '../../../hook/useAppData'
 import { useEffect } from 'react'
 import { UserDataContext } from 'context/AppContext'
 import { readMessageData, apiAddMessageData } from '../../../services/message'
+import { generateUuid } from '../../../services/utils/uuid'
 
 type FormInputProps = {
   messages: string
@@ -72,13 +73,12 @@ function MessageFunction({
 
   useEffect(() => {
     (async () => {
-      console.log('TERIMA MESSAGE ', notification)
       if(notification?.message !== undefined) {
         const { message } = notification
         if(message.status === 'created'){
           console.log('PROFILE ', user, profile, message)
-          if(Number(profile.id) === Number(message.penerima) || (Number(message.penerima) === Number(user.id) && Number(profile.id) === Number(message.pengirim))){
-            console.log('DATA DI KIRIM ', message)
+          if((Number(message.penerima) === Number(user.id) && Number(profile.id) === Number(message.pengirim))){
+            console.log('DATA CHAT BARU DI TERIMA ', message)
             addSetMessageData(message, user)
           }
           if(Number(message.penerima) === Number(user.id) && (Number(message.pengirim) === Number(profile.id))) {
@@ -102,9 +102,14 @@ function MessageFunction({
   ])
 
   const onSubmit = async (data: FormInputProps) => {
-    console.log(data)
+    const uuid = await generateUuid()
     reset()
+    await addSetMessageData({
+      client_ref_id: uuid,
+      pesan: data?.messages
+    }, user)
     await apiAddMessageData(profile?.id, {
+      client_ref_id: uuid,
       pesan: data?.messages
     })
   }

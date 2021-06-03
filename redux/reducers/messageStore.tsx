@@ -69,9 +69,10 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       }
     case UPDATE_MESSAGE_DATA:
       const mapingMessage = state?.messages.map((val: any) => {
-        if (val?.id === action?.payload?.messages?.id) {
+        if (val?.client_ref_id === action?.payload?.messages?.client_ref_id) {
           return {
             ...val,
+            id: action?.payload?.messages?.id,
             read_at: action?.payload?.messages?.read_at
           }
         }
