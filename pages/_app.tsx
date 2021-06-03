@@ -1,9 +1,9 @@
 import type { AppProps, AppContext } from 'next/app'
 import Pusher from 'pusher-js'
+import getConfig from 'next/config'
 import { FC, useState, useEffect } from 'react'
 import Head from 'next/head'
-import { connect, Provider } from 'react-redux'
-import withRedux from 'next-redux-wrapper'
+import { Provider } from 'react-redux'
 import { config, dom } from "@fortawesome/fontawesome-svg-core"
 import { SyncLoader } from 'react-spinners'
 import { QueryClientProvider, QueryClient } from 'react-query'
@@ -20,6 +20,8 @@ import '../styles/tailwind.css'
 
 config.autoAddCss = false;
 const queryClient = new QueryClient()
+
+const { publicRuntimeConfig } = getConfig()
 
 function MyApp({
   Component,
@@ -45,7 +47,7 @@ function MyApp({
           pusher = new Pusher('58207882627042a86186', {
             cluster: 'ap1',
             forceTLS: true,
-            authEndpoint: 'http://127.0.0.1:8000/broadcasting/auth',
+            authEndpoint: `${publicRuntimeConfig.API_URL}broadcasting/auth`,
             auth: {
               headers: {
                 'Authorization': `Bearer ${token}`

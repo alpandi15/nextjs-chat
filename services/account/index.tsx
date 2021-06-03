@@ -2,7 +2,7 @@ import { request } from '../utils/request'
 
 const apiEditProfile = async (data: any) => {
   return request({
-    url: '/profile-update',
+    url: '/api/profile-update',
     auth: true,
     data,
     method: 'put'
@@ -11,7 +11,7 @@ const apiEditProfile = async (data: any) => {
 
 const apiChangePassword = async (data: any) => {
   return request({
-    url: '/auth/change-password',
+    url: '/api/auth/change-password',
     auth: true,
     data,
     method: 'put'
@@ -20,7 +20,7 @@ const apiChangePassword = async (data: any) => {
 
 const apiChangeEmail = async (data: any) => {
   return request({
-    url: '/profile-update/email',
+    url: '/api/profile-update/email',
     auth: true,
     data,
     method: 'put'
@@ -29,7 +29,7 @@ const apiChangeEmail = async (data: any) => {
 
 const apiChangePhone = async (data: any) => {
   return request({
-    url: '/profile-update/phone',
+    url: '/api/profile-update/phone',
     auth: true,
     data,
     method: 'put'

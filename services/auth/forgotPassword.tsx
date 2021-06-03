@@ -12,7 +12,7 @@ type ResetType = {
 
 export async function apiForgotPassword (type: string = 'email', data: Forgot) {
   return request({
-    url: `/auth/forgot-password/${type}`,
+    url: `api/auth/forgot-password/${type}`,
     auth: false,
     data,
     method: 'post'
@@ -21,7 +21,7 @@ export async function apiForgotPassword (type: string = 'email', data: Forgot) {
 
 export const apiResetPassword = async (type: string = 'email', data: ResetType) => {
   return request({
-    url: `/auth/reset-password/${type}`,
+    url: `api/auth/reset-password/${type}`,
     auth: false,
     data,
     method: 'post'
