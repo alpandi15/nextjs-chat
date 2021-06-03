@@ -34,10 +34,6 @@ function MyApp({
     (async () => {
       if (typeof window !== 'undefined') {
         let pusher: Pusher
-        window.addEventListener('beforeunload', e => {
-          e.returnValue = 'Are you sure you want to leave? You will lose your state'
-        })
-      
         if (process.env.NODE_ENV !== 'production') {
           // Enable pusher logging - isn't included in production
           Pusher.logToConsole = true

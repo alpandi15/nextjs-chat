@@ -24,6 +24,19 @@ const Home = () => {
   //   }
   // }, [pusher])
 
+  // React.useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     window.addEventListener('beforeunload', e => {
+  //       e.returnValue = 'Are you sure you want to leave? You will lose your state'
+  //     })
+  //   }
+  //   return () => {
+  //     window.removeEventListener('beforeunload', e => {
+  //       e.returnValue = 'Remove Listener'
+  //     })
+  //   }
+  // }, [])
+
   return (
     <ContentLayout>
       <Content>
