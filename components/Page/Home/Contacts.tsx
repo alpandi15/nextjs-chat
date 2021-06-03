@@ -35,6 +35,7 @@ function ListContactFunction({
 }: any) {
   const [messageActive, setMessageActive] = useState(null)
   const { user, logout, notification } = useAppContext()
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     const fetch = async () => {
@@ -84,11 +85,18 @@ function ListContactFunction({
         </div>
         <SearchBar
           placeholder="Cari..."
+          onChange={(e) => setSearch(e.target.value)}
         />
       </FormSearch>
       <ContentListChat>
         {
-          contacts?.map((val: any, key: number) => {
+          contacts.filter((v: any) => {
+            if (search === '') {
+              return v
+            } else if (String(v?.friend?.name).toLowerCase().includes(search.toLowerCase())) {
+              return v
+            }
+          }).map((val: any, key: number) => {
             if (val?.status === 'diterima') {
               return (
                 <UserContact key={key} onClick={() => clickFriend(val?.id)}>
