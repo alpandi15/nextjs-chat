@@ -52,10 +52,8 @@ export default withAuthSync(function EditProfile () {
     if (login?.success) {
       Router.replace('/home/profile')
     }
-    console.log(data, login)
   }
 
-  console.log('STATE CONTEXTs ', state)
   return (
     <Layout title="Edit Profile">
       <Content>

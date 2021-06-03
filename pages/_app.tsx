@@ -42,7 +42,6 @@ function MyApp({
         }
       
         const token = await getCookies(TOKEN)
-        console.log('TOKEN ', user)
         if (token && user) {
           pusher = new Pusher('58207882627042a86186', {
             cluster: 'ap1',

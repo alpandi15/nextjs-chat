@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import {
+  faCheck,
   faCheckDouble,
   faCommentAlt,
   faSignOutAlt,
@@ -56,7 +57,6 @@ function ListContactFunction({
     })
 
     let friend_id = contactMessage.length > 0 ? {status: true, id: contactMessage[0].friend.id} : {status: false}
-    console.log('ID ', contactMessage, friend_id)
     if(friend_id.status && messageActive !== friend_id.id){
       await getProfileData(friend_id.id)
       await getMessageData(friend_id?.id)
@@ -101,7 +101,7 @@ function ListContactFunction({
                           val?.friend?.as_pesan === 'pengirim'
                           ? val?.friend?.read_at === null ? (
                             <>
-                              <FontAwesomeIcon className="text-gray-400" icon={faCheckDouble} />
+                              <FontAwesomeIcon className="text-gray-400" icon={faCheck} />
                               <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
                             </>
                           ) : (

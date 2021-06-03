@@ -15,7 +15,6 @@ export const auth = (ctx: any) => {
    */
 
   if (ctx.req && !token) {
-    console.log('PATH ', ctx?.pathname)
     const redirect = ctx
       && ctx.pathname
       && ctx.pathname !== '/auth/login'

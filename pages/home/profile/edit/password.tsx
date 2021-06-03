@@ -49,7 +49,6 @@ export default withAuthSync(function UpdatePassword () {
     if (update?.success) {
       Router.replace('/home/profile')
     }
-    console.log(data, update)
   }
 
   return (

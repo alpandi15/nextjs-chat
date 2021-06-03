@@ -3,13 +3,13 @@ import {
   useForm
 } from 'react-hook-form'
 import {
-  // faCheck,
+  faCheck,
   faTimes,
   faCheckDouble,
   faPaperPlane
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { getContactsData } from '../../../redux/actions/contact'
+import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
 import {
   getProfileData,
   addSetMessageData,
@@ -38,7 +38,8 @@ type FormInputProps = {
 function MessageFunction({
   profile,
   groupSortMessage,
-  addSetMessageData
+  addSetMessageData,
+  updateMessageContact
 }: any) {
   const { user, notification } = useAppContext()
   const dispatch = useDispatch()
@@ -76,7 +77,6 @@ function MessageFunction({
       if(notification?.message !== undefined) {
         const { message } = notification
         if(message.status === 'created'){
-          console.log('PROFILE ', user, profile, message)
           if((Number(message.penerima) === Number(user.id) && Number(profile.id) === Number(message.pengirim))){
             console.log('DATA CHAT BARU DI TERIMA ', message)
             addSetMessageData(message, user)
@@ -104,6 +104,12 @@ function MessageFunction({
   const onSubmit = async (data: FormInputProps) => {
     const uuid = await generateUuid()
     reset()
+    await updateMessageContact({
+      client_ref_id: uuid,
+      pesan: data?.messages,
+      pengirim: user?.id,
+      penerima: profile?.id
+    }, user)
     await addSetMessageData({
       client_ref_id: uuid,
       pesan: data?.messages
@@ -154,7 +160,7 @@ function MessageFunction({
                                   <div className="ml-1">
                                     {
                                       message?.read_at === null ? (
-                                        <FontAwesomeIcon className="text-gray-400" icon={faCheckDouble} />
+                                        <FontAwesomeIcon className="text-gray-400" icon={faCheck} />
                                       ) : (
                                         <FontAwesomeIcon className="text-green-500" icon={faCheckDouble} />
                                       )
@@ -216,7 +222,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => ({
   getContactsData: () => dispatch(getContactsData()),
   getProfileData: (id: number) => dispatch(getProfileData(id)),
-  addSetMessageData: (message: any, user: UserDataContext) => dispatch(addSetMessageData(message, user))
+  addSetMessageData: (message: any, user: UserDataContext) => dispatch(addSetMessageData(message, user)),
+  updateMessageContact: (message: any, user: UserDataContext) => dispatch(updateMessageContact(message, user))
 })
 
 export const MessageConversation = connect(mapStateToProps, mapDispatchToProps)(MessageFunction)
