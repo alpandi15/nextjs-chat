@@ -3,6 +3,8 @@ import {
   SET_MESSAGE_DATA,
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
+  MERGE_MESSAGE_DATA,
+  LOAD_PROFILE_DATA,
   sortMessage
 } from '../type'
 
@@ -12,12 +14,14 @@ interface ActionProps {
 }
 
 type InitialProps = {
+  loadProfile: boolean,
   profile: {},
   messages: [],
   groupSortMessage: {}
 }
 
 const initialState: InitialProps = {
+  loadProfile: false,
   profile: {},
   messages: [],
   groupSortMessage: {}
@@ -25,9 +29,15 @@ const initialState: InitialProps = {
 
 const messageStore = (state: InitialProps = initialState, action: ActionProps) => {
   switch (action.type) {
+    case LOAD_PROFILE_DATA:
+      return {
+        ...state,
+        loadProfile: true
+      }
     case SET_PROFILE_DATA:
       return {
         ...state,
+        loadProfile: false,
         profile: action?.payload?.profile
       }
     case SET_MESSAGE_DATA:
@@ -83,6 +93,12 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       return {
         ...state,
         messages: mapingMessage
+      }
+    case MERGE_MESSAGE_DATA:
+      let merger = state?.messages?.concat(action?.payload)
+      return {
+        ...state,
+        messages: merger
       }
     default:
       return state

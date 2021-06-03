@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withAuthSync } from '../../components/Security/auth'
 import { ListContact } from '../../components/Page/Home/Contacts'
 import { MessageConversation } from '../../components/Page/Home/Message'
@@ -8,9 +9,12 @@ import {
   LeftSide,
   RightSide
 } from '../../components/Page/Home/styles'
+import { useEffect } from 'react'
 // import { useAppContext } from '../../hook/useAppData'
 
-const Home = () => {
+const Home = ({
+  profile
+}: any) => {
   // const { pusher, user } = useAppContext()
   // React.useEffect(() => {
   //   console.log('WINDOW ', pusher)
@@ -51,4 +55,13 @@ const Home = () => {
   )
 }
 
-export default withAuthSync(Home)
+const mapStateToProps = (state: any) => {
+  const {
+    messageStore
+  } = state
+  return {
+    profile: messageStore?.profile
+  }
+}
+
+export default withAuthSync(connect(mapStateToProps)(Home))

@@ -8,11 +8,15 @@ export async function apiGetProfileData (id: number) {
   })
 }
 
-export async function apiGetMessege (id: number) {
+type DataPrams = {
+  skip: number
+}
+export async function apiGetMessege (id: number, data: DataPrams | undefined | null = null) {
   return request({
     url: `api/message/${id}`,
     auth: true,
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 

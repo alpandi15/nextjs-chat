@@ -53,15 +53,11 @@ function ListContactFunction({
   }, [notification])
 
   const clickFriend = async (contactId: number) => {
-    let contactMessage = contacts.filter((v: { id: any }) => {
-      return v.id == contactId;
-    })
-
-    let friend_id = contactMessage.length > 0 ? {status: true, id: contactMessage[0].friend.id} : {status: false}
-    if(friend_id.status && messageActive !== friend_id.id){
-      await getProfileData(friend_id.id)
-      await getMessageData(friend_id?.id)
-      setMessageActive(friend_id.id)
+    const finded = contacts.find((v: any) => Number(v.id) === Number(contactId))
+    if (finded && messageActive !== finded?.id) {
+      await getProfileData(finded?.friend?.id)
+      await getMessageData(finded?.friend?.id)
+      setMessageActive(finded?.friend?.id)
     }
   }
 

@@ -14,7 +14,8 @@ import {
   getProfileData,
   addSetMessageData,
   setSortMessageDispatch,
-  updateMessageDataDispatch
+  updateMessageDataDispatch,
+  addScrollSetMessageData
 } from '../../../redux/actions/message'
 import {
   Header,
@@ -26,7 +27,7 @@ import {
   InputMessage
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { UserDataContext } from 'context/AppContext'
 import { readMessageData, apiAddMessageData } from '../../../services/message'
 import { generateUuid } from '../../../services/utils/uuid'
@@ -39,9 +40,14 @@ function MessageFunction({
   profile,
   groupSortMessage,
   addSetMessageData,
-  updateMessageContact
+  updateMessageContact,
+  addScrollSetMessageData
 }: any) {
+  const [skip, setSkip] = useState(10)
+  const [triggerScroll, setTriggerScroll] = useState(true)
+  const [batasPesan, setBatasPesan] = useState(true)
   const { user, notification } = useAppContext()
+  const refContentMessage = useRef(null)
   const dispatch = useDispatch()
 
   const {
@@ -96,10 +102,16 @@ function MessageFunction({
       }
     })()
   }, [
-    notification,
-    user,
-    profile
+    notification
+    // user,
+    // profile
   ])
+
+  useEffect(() => {
+    console.log('BATAS PESAN ', batasPesan)
+    return () => {
+    }
+  }, [])
 
   const onSubmit = async (data: FormInputProps) => {
     const uuid = await generateUuid()
@@ -118,6 +130,25 @@ function MessageFunction({
       client_ref_id: uuid,
       pesan: data?.messages
     })
+  }
+
+  const scrollTrigger = async () => {
+    let height: any = refContentMessage?.current
+    let max_height = height.scrollHeight
+    let on_scroll = height.scrollTop - height.offsetHeight
+    let offset_height = height.offsetHeight
+    console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, batasPesan)
+    if(on_scroll <= (- max_height) && triggerScroll && batasPesan){
+      setTriggerScroll(false)
+      const res = await addScrollSetMessageData({ id: profile?.id, skip }, user)
+      console.log('Ambil Data Baru ', res)
+      setSkip((old) => old + 10)
+      if(res?.length < 1){
+        setBatasPesan(false)
+      }
+      height.scrollTop = - max_height + offset_height
+      setTriggerScroll(true)
+    }
   }
 
   if (profile?.id) {
@@ -139,7 +170,11 @@ function MessageFunction({
             </ButtonIcon>
           </ActionContent>
         </Header>
-        <ScrollMessage className="overflow-auto flex flex-col-reverse">
+        <ScrollMessage
+          ref={refContentMessage}
+          onScroll={scrollTrigger}
+          className="overflow-auto flex flex-col-reverse"
+        >
           <div className="wrapper w-full p-4">
             <div className="content w-full">
               {
@@ -223,7 +258,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   getContactsData: () => dispatch(getContactsData()),
   getProfileData: (id: number) => dispatch(getProfileData(id)),
   addSetMessageData: (message: any, user: UserDataContext) => dispatch(addSetMessageData(message, user)),
-  updateMessageContact: (message: any, user: UserDataContext) => dispatch(updateMessageContact(message, user))
+  updateMessageContact: (message: any, user: UserDataContext) => dispatch(updateMessageContact(message, user)),
+  addScrollSetMessageData: (data: { id:number, skip:number }, user: UserDataContext) => dispatch(addScrollSetMessageData(data, user))
 })
 
 export const MessageConversation = connect(mapStateToProps, mapDispatchToProps)(MessageFunction)

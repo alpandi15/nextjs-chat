@@ -4,7 +4,9 @@ import {
   SET_MESSAGE_DATA,
   sortMessage,
   ADD_MESSAGE_DATA,
-  UPDATE_MESSAGE_DATA
+  UPDATE_MESSAGE_DATA,
+  MERGE_MESSAGE_DATA,
+  LOAD_PROFILE_DATA
 } from '../type'
 import {
   apiGetProfileData,
@@ -13,6 +15,12 @@ import {
 import { generateUuid } from '../../services/utils/uuid'
 import { UserDataContext } from 'context/AppContext'
 import { commitUpdateStatusUserContact } from './contact'
+
+const fetchProfile = () => {
+  return {
+    type: LOAD_PROFILE_DATA
+  }
+}
 
 const commit = (data: any) => {
   return {
@@ -50,6 +58,13 @@ const addMessageDispatch = (messages: any) => {
   }
 }
 
+const mergerMessageDispatch = (messages: any) => {
+  return {
+    type: MERGE_MESSAGE_DATA,
+    payload: messages
+  }
+}
+
 export const updateMessageDataDispatch = (messages: any) => {
   return {
     type: UPDATE_MESSAGE_DATA,
@@ -67,6 +82,7 @@ type ResProfile = {
 }
 export const getProfileData = (id: number) => async (dispatch: any) => {
   try {
+    dispatch(fetchProfile())
     const res: ResProfile = await apiGetProfileData(id)
     if (res) {
       dispatch(commit(res))
@@ -122,5 +138,31 @@ export const addSetMessageData = (data: any, user: UserDataContext) => async (di
     dispatch(setSortMessageDispatch('timestamp'))
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const addScrollSetMessageData = (data: { id: number, skip: number }, user: UserDataContext) => async (dispatch: any) => {
+  try {
+    const res = await apiGetMessege(data?.id, { skip: data?.skip })
+    if (res) {
+      let dataChange = res.data.map((value: { id: any; pesan: any; timestamp: any; created_at: any; read_at: any; time: any; pengirim: any }) => {
+        return {
+          id: value.id,
+          message: value.pesan,
+          timestamp: value.timestamp,
+          created_at: value.created_at,
+          read_at: value.read_at,
+          time: value.time,
+          pengirim: value?.pengirim,
+          as: user?.id === value.pengirim ? 'pengirim' : 'penerima'
+        }
+      })
+      dispatch(mergerMessageDispatch(dataChange))
+      dispatch(setSortMessageDispatch('timestamp'))
+      return dataChange
+    }
+    return null
+  } catch (error) {
+    
   }
 }
