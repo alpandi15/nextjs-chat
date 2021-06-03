@@ -12,6 +12,7 @@ import {
 } from '../../services/message'
 import { generateUuid } from '../../services/utils/uuid'
 import { UserDataContext } from 'context/AppContext'
+import { commitUpdateStatusUserContact } from './contact'
 
 const commit = (data: any) => {
   return {
@@ -58,11 +59,21 @@ export const updateMessageDataDispatch = (messages: any) => {
   }
 }
 
+type ResProfile = {
+  id: number,
+  name: string,
+  terakhir_dilihat: string,
+  username: string
+}
 export const getProfileData = (id: number) => async (dispatch: any) => {
   try {
-    const res = await apiGetProfileData(id)
+    const res: ResProfile = await apiGetProfileData(id)
     if (res) {
       dispatch(commit(res))
+      dispatch(commitUpdateStatusUserContact({
+        id: res.id,
+        status: res.terakhir_dilihat
+      }))
     }
   } catch (err) {
     console.log(err)

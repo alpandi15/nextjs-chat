@@ -1,6 +1,7 @@
 import {
   SET_CONTACT_DATA,
-  UPDATE_MESSAGE_TERAKHIR_DIMENU_USER
+  UPDATE_MESSAGE_TERAKHIR_DIMENU_USER,
+  UPDATE_STATUS_USER_DIMENU_USER
 } from '../type'
 import {
   apiGetContact
@@ -22,6 +23,17 @@ const commitUpdateMessageContact = (data: any) => {
     payload: {
       data
     }
+  }
+}
+
+type UpdateStatusProps = {
+  id: number,
+  status: string
+}
+export const commitUpdateStatusUserContact = (data: UpdateStatusProps) => {
+  return {
+    type: UPDATE_STATUS_USER_DIMENU_USER,
+    payload: data
   }
 }
 
