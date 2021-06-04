@@ -44,9 +44,9 @@ function MessageFunction({
   addSetMessageData,
   updateMessageContact,
   addScrollSetMessageData,
-  endScroll
+  endScroll,
+  messages
 }: any) {
-  const [skip, setSkip] = useState(10)
   const [triggerScroll, setTriggerScroll] = useState(true)
   // const [batasPesan, setBatasPesan] = useState(true)
   const { user, notification } = useAppContext()
@@ -133,11 +133,11 @@ function MessageFunction({
     // console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, endScroll)
     if(on_scroll <= (- max_height) && triggerScroll && endScroll){
       setTriggerScroll(false)
-      const res = await addScrollSetMessageData({ id: profile?.id, skip }, user)
+      const res = await addScrollSetMessageData({ id: profile?.id, skip: messages?.length }, user)
       // console.log('Ambil Data Baru ', res)
-      setSkip((old) => old + 10)
+      // setSkip((old) => old + 10)
       if(res?.length < 1){
-        setSkip(10)
+        // setSkip(10)
         dispatch(endScrollMessage(false))
         // setBatasPesan(false)
       }
