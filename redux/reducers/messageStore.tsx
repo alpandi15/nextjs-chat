@@ -89,7 +89,10 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
           return {
             ...val,
             id: action?.payload?.messages?.id,
-            read_at: action?.payload?.messages?.read_at
+            read_at: action?.payload?.messages?.read_at,
+            created_at: action?.payload?.messages?.created_at,
+            time: action?.payload?.messages?.time,
+            timestamp: action?.payload?.messages?.timestamp,
           }
         }
         return val
