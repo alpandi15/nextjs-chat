@@ -7,6 +7,7 @@ import {
   MERGE_MESSAGE_DATA,
   END_SCROLL,
   UPDATE_STATUS_PROFILE,
+  RESET_MESSAGE_DATA,
   sortMessage
 } from '../type'
 
@@ -78,7 +79,6 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
     case ADD_MESSAGE_DATA:
       let updateMessage: string[] = state.messages || []
       updateMessage.push(action?.payload?.messages)
-      console.log('UPDATE ', updateMessage)
       return {
         ...state,
         messages: updateMessage
@@ -98,7 +98,6 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         return val
       })
 
-      console.log('MAPING MESSAGE ', mapingMessage, state?.messages)
       return {
         ...state,
         messages: mapingMessage
@@ -121,6 +120,12 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         }
       }
       return state
+    case RESET_MESSAGE_DATA:
+      return {
+        ...state,
+        messages: [],
+        groupSortMessage: {}
+      }
     default:
       return state
   }

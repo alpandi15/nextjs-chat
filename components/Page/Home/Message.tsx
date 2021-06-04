@@ -87,18 +87,14 @@ function MessageFunction({
         const { message } = notification
         if(message.status === 'created'){
           if((Number(message.penerima) === Number(user.id) && Number(profile.id) === Number(message.pengirim))){
-            console.log('DATA CHAT BARU DI TERIMA ', message)
             addSetMessageData(message, user)
           }
           if(Number(message.penerima) === Number(user.id) && (Number(message.pengirim) === Number(profile.id))) {
-            console.log('DATA DI READ ', message)
             readMessageData(profile.id)
             // console.log('diterima pesannya bro');
           }
         }
         else if(message.status === 'updated'){
-          // this.UPDATE_MESSAGE_DATA(message)
-          console.log('UPDATE DATA CHATTING ', message)
           dispatch(updateMessageDataDispatch(message))
           dispatch(setSortMessageDispatch('timestamp'))
         }

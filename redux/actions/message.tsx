@@ -8,7 +8,8 @@ import {
   UPDATE_MESSAGE_DATA,
   MERGE_MESSAGE_DATA,
   UPDATE_STATUS_PROFILE,
-  END_SCROLL
+  END_SCROLL,
+  RESET_MESSAGE_DATA
 } from '../type'
 import {
   apiGetProfileData,
@@ -22,6 +23,12 @@ export const endScrollMessage = (state: boolean) => {
   return {
     type: END_SCROLL,
     payload: state
+  }
+}
+
+const resetMessage = () => {
+  return {
+    type: RESET_MESSAGE_DATA
   }
 }
 
@@ -100,6 +107,7 @@ export const getProfileData = (id: number) => async (dispatch: any) => {
   try {
     const res: ResProfile = await apiGetProfileData(id)
     if (res) {
+      dispatch(resetMessage())
       dispatch(commit(res))
       dispatch(commitUpdateStatusUserContact({
         id: res.id,

@@ -48,7 +48,6 @@ export const updateMessageContact = (data: any, user: UserDataContext) => (dispa
       read_at: data?.read_at || null,
       as_pesan: user.id === data?.pengirim ? 'pengirim' : 'penerima',
     }
-    console.log('UPDATE PESAN TERAKHIR CONTACT ',data, dataChange)
     dispatch(commitUpdateMessageContact(dataChange))
     return
   } catch (error) {
