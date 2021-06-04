@@ -21,12 +21,12 @@ import { loggedChecked } from '../../../components/Security/auth'
 import { apiRegister } from '../../../services/auth'
 
 type FormInputProps = {
-  name: string,
   username: string,
-  email: string,
+  // name: string,
+  // email: string,
+  // phone: string,
   password: string,
   confirm_password: string,
-  phone: string
 }
 
 export default loggedChecked(function Register () {
@@ -64,58 +64,6 @@ export default loggedChecked(function Register () {
             <FormControl>
               <Input
                 type="text"
-                id="name"
-                className={errors?.name ? 'invalid' : ''}
-                {...register('name',
-                  {
-                    required: 'Name Required*',
-                    maxLength: { value: 30, message: 'Max Length 30 character' },
-                    minLength: { value: 6, message: 'Min Length 6 character' }
-                  })
-                }
-              />
-              <Label
-                htmlFor="name"
-                className={`active ${errors?.name ? 'invalid' : 'valid'}`}
-              >Name</Label>
-              {
-                errors?.name && (
-                  <ErrorInputMessage>
-                    {errors?.name?.message}
-                  </ErrorInputMessage>
-                )
-              }
-            </FormControl>
-            <FormControl>
-              <Input
-                type="text"
-                id="email"
-                className={errors?.email ? 'invalid' : ''}
-                {...register('email',
-                  {
-                    required: 'Email Required*',
-                    pattern: {
-                      value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                      message: 'Email Format Invalid'
-                    }
-                  })
-                }
-              />
-              <Label
-                htmlFor="email"
-                className={`active ${errors?.email ? 'invalid' : 'valid'}`}
-              >Email</Label>
-              {
-                errors?.email && (
-                  <ErrorInputMessage>
-                    {errors?.email?.message}
-                  </ErrorInputMessage>
-                )
-              }
-            </FormControl>
-            <FormControl>
-              <Input
-                type="text"
                 id="username"
                 className={errors?.username ? 'invalid' : ''}
                 {...register('username',
@@ -132,35 +80,6 @@ export default loggedChecked(function Register () {
                 errors?.username && (
                   <ErrorInputMessage>
                     {errors?.username?.message}
-                  </ErrorInputMessage>
-                )
-              }
-            </FormControl>
-            <FormControl>
-              <Input
-                type="text"
-                id="phone"
-                className={errors?.phone ? 'invalid' : ''}
-                {...register('phone',
-                  {
-                    required: 'Phone Required*',
-                    maxLength: { value: 30, message: 'Max Length 30 character' },
-                    minLength: { value: 6, message: 'Min Length 6 character' },
-                    pattern: {
-                      value: /^(^08)(\d{3,4}-?){2}\d{3,4}$/,
-                      message: 'Use Phone Number Format'
-                    }
-                  })
-                }
-              />
-              <Label
-                htmlFor="phone"
-                className={`active ${errors?.phone ? 'invalid' : 'valid'}`}
-              >Phone Number</Label>
-              {
-                errors?.phone && (
-                  <ErrorInputMessage>
-                    {errors?.phone?.message}
                   </ErrorInputMessage>
                 )
               }
