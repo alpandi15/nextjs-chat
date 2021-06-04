@@ -47,7 +47,7 @@ function MessageFunction({
 }: any) {
   const [skip, setSkip] = useState(10)
   const [triggerScroll, setTriggerScroll] = useState(true)
-  const [batasPesan, setBatasPesan] = useState(true)
+  // const [batasPesan, setBatasPesan] = useState(true)
   const { user, notification } = useAppContext()
   const refContentMessage = useRef(null)
   const dispatch = useDispatch()

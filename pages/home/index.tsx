@@ -9,12 +9,9 @@ import {
   LeftSide,
   RightSide
 } from '../../components/Page/Home/styles'
-import { useEffect } from 'react'
 // import { useAppContext } from '../../hook/useAppData'
 
-const Home = ({
-  loadProfile
-}: any) => {
+const Home = () => {
   // const { pusher, user } = useAppContext()
   // React.useEffect(() => {
   //   console.log('WINDOW ', pusher)
