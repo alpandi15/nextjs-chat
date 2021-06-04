@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 // import { useAppContext } from '../../hook/useAppData'
 
 const Home = ({
-  profile
+  loadProfile
 }: any) => {
   // const { pusher, user } = useAppContext()
   // React.useEffect(() => {
@@ -60,7 +60,7 @@ const mapStateToProps = (state: any) => {
     messageStore
   } = state
   return {
-    profile: messageStore?.profile
+    loadProfile: messageStore?.loadProfile
   }
 }
 

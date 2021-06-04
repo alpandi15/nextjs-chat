@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import {
   faCheck,
   faCheckDouble,
@@ -11,7 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
 import {
   getProfileData,
-  getMessageData
+  getMessageData,
+  endScrollMessage
 } from '../../../redux/actions/message'
 import {
   Header,
@@ -36,6 +37,7 @@ function ListContactFunction({
   const [messageActive, setMessageActive] = useState(null)
   const { user, logout, notification } = useAppContext()
   const [search, setSearch] = useState('')
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetch = async () => {
@@ -55,6 +57,7 @@ function ListContactFunction({
   const clickFriend = async (contactId: number) => {
     const finded = contacts.find((v: any) => Number(v.id) === Number(contactId))
     if (finded && messageActive !== finded?.id) {
+      dispatch(endScrollMessage(true))
       await getProfileData(finded?.friend?.id)
       await getMessageData(finded?.friend?.id)
       setMessageActive(finded?.friend?.id)

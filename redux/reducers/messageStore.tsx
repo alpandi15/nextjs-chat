@@ -4,7 +4,7 @@ import {
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
   MERGE_MESSAGE_DATA,
-  LOAD_PROFILE_DATA,
+  END_SCROLL,
   sortMessage
 } from '../type'
 
@@ -14,14 +14,14 @@ interface ActionProps {
 }
 
 type InitialProps = {
-  loadProfile: boolean,
+  endScroll: boolean,
   profile: {},
   messages: [],
   groupSortMessage: {}
 }
 
 const initialState: InitialProps = {
-  loadProfile: false,
+  endScroll: true,
   profile: {},
   messages: [],
   groupSortMessage: {}
@@ -29,15 +29,14 @@ const initialState: InitialProps = {
 
 const messageStore = (state: InitialProps = initialState, action: ActionProps) => {
   switch (action.type) {
-    case LOAD_PROFILE_DATA:
+    case END_SCROLL:
       return {
         ...state,
-        loadProfile: true
+        endScroll: action?.payload
       }
     case SET_PROFILE_DATA:
       return {
         ...state,
-        loadProfile: false,
         profile: action?.payload?.profile
       }
     case SET_MESSAGE_DATA:

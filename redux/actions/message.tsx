@@ -6,7 +6,7 @@ import {
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
   MERGE_MESSAGE_DATA,
-  LOAD_PROFILE_DATA
+  END_SCROLL
 } from '../type'
 import {
   apiGetProfileData,
@@ -16,9 +16,10 @@ import { generateUuid } from '../../services/utils/uuid'
 import { UserDataContext } from 'context/AppContext'
 import { commitUpdateStatusUserContact } from './contact'
 
-const fetchProfile = () => {
+export const endScrollMessage = (state: boolean) => {
   return {
-    type: LOAD_PROFILE_DATA
+    type: END_SCROLL,
+    payload: state
   }
 }
 
@@ -82,7 +83,6 @@ type ResProfile = {
 }
 export const getProfileData = (id: number) => async (dispatch: any) => {
   try {
-    dispatch(fetchProfile())
     const res: ResProfile = await apiGetProfileData(id)
     if (res) {
       dispatch(commit(res))

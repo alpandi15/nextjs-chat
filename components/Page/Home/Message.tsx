@@ -15,7 +15,8 @@ import {
   addSetMessageData,
   setSortMessageDispatch,
   updateMessageDataDispatch,
-  addScrollSetMessageData
+  addScrollSetMessageData,
+  endScrollMessage
 } from '../../../redux/actions/message'
 import {
   Header,
@@ -41,7 +42,8 @@ function MessageFunction({
   groupSortMessage,
   addSetMessageData,
   updateMessageContact,
-  addScrollSetMessageData
+  addScrollSetMessageData,
+  endScroll
 }: any) {
   const [skip, setSkip] = useState(10)
   const [triggerScroll, setTriggerScroll] = useState(true)
@@ -107,12 +109,6 @@ function MessageFunction({
     // profile
   ])
 
-  useEffect(() => {
-    console.log('BATAS PESAN ', batasPesan)
-    return () => {
-    }
-  }, [])
-
   const onSubmit = async (data: FormInputProps) => {
     const uuid = await generateUuid()
     reset()
@@ -137,14 +133,16 @@ function MessageFunction({
     let max_height = height.scrollHeight
     let on_scroll = height.scrollTop - height.offsetHeight
     let offset_height = height.offsetHeight
-    console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, batasPesan)
-    if(on_scroll <= (- max_height) && triggerScroll && batasPesan){
+    console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, endScroll)
+    if(on_scroll <= (- max_height) && triggerScroll && endScroll){
       setTriggerScroll(false)
       const res = await addScrollSetMessageData({ id: profile?.id, skip }, user)
       console.log('Ambil Data Baru ', res)
       setSkip((old) => old + 10)
       if(res?.length < 1){
-        setBatasPesan(false)
+        setSkip(10)
+        dispatch(endScrollMessage(false))
+        // setBatasPesan(false)
       }
       height.scrollTop = - max_height + offset_height
       setTriggerScroll(true)
@@ -250,7 +248,8 @@ const mapStateToProps = (state: any) => {
   return {
     profile: messageStore?.profile,
     messages: messageStore?.messages,
-    groupSortMessage: messageStore?.groupSortMessage
+    groupSortMessage: messageStore?.groupSortMessage,
+    endScroll: messageStore?.endScroll
   }
 }
 
