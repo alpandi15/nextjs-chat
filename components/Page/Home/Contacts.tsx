@@ -56,11 +56,12 @@ function ListContactFunction({
 
   const clickFriend = async (contactId: number) => {
     const finded = contacts.find((v: any) => Number(v.id) === Number(contactId))
-    if (finded && messageActive !== finded?.id) {
+    console.log('FINDED ', finded, messageActive)
+    if (messageActive !== finded?.friend?.id) {
+      setMessageActive(finded?.friend?.id)
       dispatch(endScrollMessage(true))
       await getProfileData(finded?.friend?.id)
       await getMessageData(finded?.friend?.id)
-      setMessageActive(finded?.friend?.id)
     }
   }
 
