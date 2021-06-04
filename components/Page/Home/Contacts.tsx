@@ -50,6 +50,7 @@ function ListContactFunction({
   useEffect(() => {
     (async () => {
       if(notification?.message !== undefined) {
+        console.log('TERIMA ', notification)
         await updateMessageContact(notification?.message, user)
       }
     })()

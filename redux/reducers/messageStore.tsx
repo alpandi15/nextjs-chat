@@ -84,23 +84,43 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         messages: updateMessage
       }
     case UPDATE_MESSAGE_DATA:
-      const mapingMessage = state?.messages.map((val: any) => {
-        if (val?.client_ref_id === action?.payload?.messages?.client_ref_id) {
-          return {
-            ...val,
-            id: action?.payload?.messages?.id,
-            read_at: action?.payload?.messages?.read_at,
-            created_at: action?.payload?.messages?.created_at,
-            time: action?.payload?.messages?.time,
-            timestamp: action?.payload?.messages?.timestamp,
+      const cari = state?.messages.find((v: any) => v?.client_ref_id === action?.payload?.messages?.client_ref_id)
+      console.log('KETEMU ', cari, action?.payload?.messages)
+      if (cari) {
+        const mapingMessage = state?.messages.map((val: any) => {
+          if (val?.client_ref_id === action?.payload?.messages?.client_ref_id) {
+            return {
+              ...val,
+              id: action?.payload?.messages?.id,
+              read_at: action?.payload?.messages?.read_at,
+              created_at: action?.payload?.messages?.created_at,
+              time: action?.payload?.messages?.time,
+              timestamp: action?.payload?.messages?.timestamp,
+            }
           }
+          return val
+        })
+        return {
+          ...state,
+          messages: mapingMessage
         }
-        return val
-      })
+      }
 
       return {
         ...state,
-        messages: mapingMessage
+        messages: [
+          ...state?.messages,
+          {
+            id: action?.payload?.messages?.id,
+            client_ref_id: action?.payload?.messages?.client_ref_id,
+            timestamp: action?.payload?.messages?.timestamp,
+            message: action?.payload?.messages?.pesan,
+            created_at: action?.payload?.messages?.created_at,
+            read_at: action?.payload?.messages?.read_at,
+            time: action?.payload?.messages?.time,
+            pengirim: action?.payload?.messages?.pengirim
+          }
+        ]
       }
     case MERGE_MESSAGE_DATA:
       let merger = state?.messages?.concat(action?.payload)
