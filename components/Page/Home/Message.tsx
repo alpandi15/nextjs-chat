@@ -48,9 +48,9 @@ function MessageFunction({
   messages
 }: any) {
   const [triggerScroll, setTriggerScroll] = useState(true)
-  // const [batasPesan, setBatasPesan] = useState(true)
+  const buttonSubmit = useRef<HTMLButtonElement>(null)
   const { user, notification } = useAppContext()
-  const refContentMessage = useRef(null)
+  const refContentMessage = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch()
 
   const {
@@ -225,8 +225,15 @@ function MessageFunction({
               <InputMessage
                 placeholder="Tulis sesuatu..."
                 {...register('messages')}
+                onKeyDown={(e) => {
+                  if(e.ctrlKey && e.keyCode === 13) {
+                    // handleSubmit(onSubmit)
+                    const btn = buttonSubmit?.current as any
+                    btn.click()
+                  }
+                }}
               />
-              <button className="right-icon">
+              <button ref={buttonSubmit} type="submit" className="right-icon">
                 <FontAwesomeIcon color="#919191" icon={faPaperPlane} />
               </button>
             </form>
