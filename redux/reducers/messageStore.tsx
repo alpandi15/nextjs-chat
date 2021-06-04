@@ -1,5 +1,6 @@
 import {
   SET_PROFILE_DATA,
+  RESET_PROFILE_DATA,
   SET_MESSAGE_DATA,
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
@@ -39,6 +40,11 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       return {
         ...state,
         profile: action?.payload?.profile
+      }
+    case RESET_PROFILE_DATA:
+      return {
+        ...state,
+        profile: {}
       }
     case SET_MESSAGE_DATA:
       return {

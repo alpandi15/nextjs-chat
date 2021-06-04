@@ -4,9 +4,9 @@ import {
 } from 'react-hook-form'
 import {
   faCheck,
-  faTimes,
   faCheckDouble,
-  faPaperPlane
+  faPaperPlane,
+  faChevronLeft
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
@@ -16,7 +16,8 @@ import {
   setSortMessageDispatch,
   updateMessageDataDispatch,
   addScrollSetMessageData,
-  endScrollMessage
+  endScrollMessage,
+  resetProfileData
 } from '../../../redux/actions/message'
 import {
   Header,
@@ -133,11 +134,11 @@ function MessageFunction({
     let max_height = height.scrollHeight
     let on_scroll = height.scrollTop - height.offsetHeight
     let offset_height = height.offsetHeight
-    console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, endScroll)
+    // console.log('Scroll ', max_height, on_scroll, offset_height, triggerScroll, endScroll)
     if(on_scroll <= (- max_height) && triggerScroll && endScroll){
       setTriggerScroll(false)
       const res = await addScrollSetMessageData({ id: profile?.id, skip }, user)
-      console.log('Ambil Data Baru ', res)
+      // console.log('Ambil Data Baru ', res)
       setSkip((old) => old + 10)
       if(res?.length < 1){
         setSkip(10)
@@ -154,6 +155,11 @@ function MessageFunction({
       <>
         <Header>
           <ProfileImg>
+            <ActionContent mobileVisible={profile?.id ? false : true}>
+              <ButtonIcon onClick={() => dispatch(resetProfileData())}>
+                <FontAwesomeIcon color="#919191" icon={faChevronLeft}/>
+              </ButtonIcon>
+            </ActionContent>
             <img src="/profile.png" alt=""/>
             <div style={{
               padding: '0 8px'
@@ -162,11 +168,6 @@ function MessageFunction({
               <div className="status">{profile?.terakhir_dilihat}</div>
             </div>
           </ProfileImg>
-          <ActionContent>
-            <ButtonIcon onClick={() => console.log()}>
-              <FontAwesomeIcon color="#919191" icon={faTimes}/>
-            </ButtonIcon>
-          </ActionContent>
         </Header>
         <ScrollMessage
           ref={refContentMessage}

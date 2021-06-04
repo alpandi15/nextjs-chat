@@ -12,7 +12,8 @@ import {
 import { updateStatusContact } from '../../redux/actions/contact'
 
 const Home = ({
-  updateStatusContact
+  updateStatusContact,
+  profile
 }: any) => {
   React.useEffect(() => {
     const intervalStatus = setInterval(async () => {
@@ -27,10 +28,10 @@ const Home = ({
   return (
     <ContentLayout>
       <Content>
-        <LeftSide>
+        <LeftSide mobileVisible={profile?.id ? false : true}>
           <ListContact />
         </LeftSide>
-        <RightSide>
+        <RightSide mobileVisible={profile?.id ? true : false}>
           <MessageConversation />
         </RightSide>
       </Content>
@@ -43,7 +44,8 @@ const mapStateToProps = (state: any) => {
     messageStore
   } = state
   return {
-    loadProfile: messageStore?.loadProfile
+    loadProfile: messageStore?.loadProfile,
+    profile: messageStore?.profile
   }
 }
 const mapDispatchToProps = (dispatch: any) => ({

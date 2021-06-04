@@ -2,6 +2,7 @@ import moment from 'moment'
 import {
   SET_PROFILE_DATA,
   SET_MESSAGE_DATA,
+  RESET_PROFILE_DATA,
   sortMessage,
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
@@ -80,6 +81,12 @@ export const updateStatusProfileDispatch = (data: any) => {
   return {
     type: UPDATE_STATUS_PROFILE,
     payload: data
+  }
+}
+
+export const resetProfileData = () => {
+  return {
+    type: RESET_PROFILE_DATA
   }
 }
 
