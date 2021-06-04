@@ -8,3 +8,11 @@ export async function apiGetContact () {
   })
 }
 
+export async function apiCheckOnline () {
+  return request({
+    url: 'api/check/online',
+    auth: true,
+    method: 'get'
+  })
+}
+

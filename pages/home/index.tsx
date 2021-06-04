@@ -9,34 +9,20 @@ import {
   LeftSide,
   RightSide
 } from '../../components/Page/Home/styles'
-// import { useAppContext } from '../../hook/useAppData'
+import { updateStatusContact } from '../../redux/actions/contact'
 
-const Home = () => {
-  // const { pusher, user } = useAppContext()
-  // React.useEffect(() => {
-  //   console.log('WINDOW ', pusher)
-  //   if (pusher) {
-  //     const channel = pusher.subscribe(`private-App.Models.User.${user?.id}`)
-  //     .bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated',
-  //     (data: any) => {
-  //       console.log('RECEIVED ', data)
-  //     })
-  //     console.log('Channel ', channel)
-  //   }
-  // }, [pusher])
-
-  // React.useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     window.addEventListener('beforeunload', e => {
-  //       e.returnValue = 'Are you sure you want to leave? You will lose your state'
-  //     })
-  //   }
-  //   return () => {
-  //     window.removeEventListener('beforeunload', e => {
-  //       e.returnValue = 'Remove Listener'
-  //     })
-  //   }
-  // }, [])
+const Home = ({
+  updateStatusContact
+}: any) => {
+  React.useEffect(() => {
+    const intervalStatus = setInterval(async () => {
+      await updateStatusContact()
+    }, 58000)
+    
+    return () => {
+      clearInterval(intervalStatus)
+    }
+  }, [])
 
   return (
     <ContentLayout>
@@ -60,5 +46,8 @@ const mapStateToProps = (state: any) => {
     loadProfile: messageStore?.loadProfile
   }
 }
+const mapDispatchToProps = (dispatch: any) => ({
+  updateStatusContact: () => dispatch(updateStatusContact())
+})
 
-export default withAuthSync(connect(mapStateToProps)(Home))
+export default withAuthSync(connect(mapStateToProps, mapDispatchToProps)(Home))

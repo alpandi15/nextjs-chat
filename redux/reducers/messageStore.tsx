@@ -5,6 +5,7 @@ import {
   UPDATE_MESSAGE_DATA,
   MERGE_MESSAGE_DATA,
   END_SCROLL,
+  UPDATE_STATUS_PROFILE,
   sortMessage
 } from '../type'
 
@@ -15,9 +16,9 @@ interface ActionProps {
 
 type InitialProps = {
   endScroll: boolean,
-  profile: {},
-  messages: [],
-  groupSortMessage: {}
+  profile: any,
+  messages: string[],
+  groupSortMessage: any
 }
 
 const initialState: InitialProps = {
@@ -58,8 +59,8 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
       });
 
       // groupkan
-      let keyGroup = 'created_at'
-      messages = messages.reduce(function (r, a) {
+      let keyGroup: string = 'created_at'
+      messages = messages.reduce(function (r: any, a: any) {
         r[String(a[keyGroup]).split(' ')[0]] = r[String(a[keyGroup]).split(' ')[0]] || [];
         r[String(a[keyGroup]).split(' ')[0]].push(a);
         return r;
@@ -99,6 +100,18 @@ const messageStore = (state: InitialProps = initialState, action: ActionProps) =
         ...state,
         messages: merger
       }
+    case UPDATE_STATUS_PROFILE:
+      const find = action?.payload?.find((v: any) => v.id === state?.profile?.id)
+      if (find) {
+        return {
+          ...state,
+          profile: {
+            ...state.profile,
+            terakhir_dilihat: find?.status
+          }
+        }
+      }
+      return state
     default:
       return state
   }

@@ -6,6 +6,7 @@ import {
   ADD_MESSAGE_DATA,
   UPDATE_MESSAGE_DATA,
   MERGE_MESSAGE_DATA,
+  UPDATE_STATUS_PROFILE,
   END_SCROLL
 } from '../type'
 import {
@@ -72,6 +73,13 @@ export const updateMessageDataDispatch = (messages: any) => {
     payload: {
       messages
     }
+  }
+}
+
+export const updateStatusProfileDispatch = (data: any) => {
+  return {
+    type: UPDATE_STATUS_PROFILE,
+    payload: data
   }
 }
 

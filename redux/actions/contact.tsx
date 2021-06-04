@@ -4,9 +4,11 @@ import {
   UPDATE_STATUS_USER_DIMENU_USER
 } from '../type'
 import {
-  apiGetContact
+  apiGetContact,
+  apiCheckOnline
 } from '../../services/contacts'
 import { UserDataContext } from '../../context/AppContext'
+import { updateStatusProfileDispatch } from './message'
 
 const commit = (data: any) => {
   return {
@@ -62,5 +64,21 @@ export const getContactsData = () => async (dispatch: any) => {
     }
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const updateStatusContact = () => async (dispatch: any) => {
+  try {
+    const res = await apiCheckOnline()
+    console.log('DATA ONLINE ', res)
+    if (res?.data?.length > 0) {
+      res?.data.forEach((f: any) => {
+        // commit('UPDATE_STATUS_USER_DIMENU_USER', f)
+        dispatch(commitUpdateStatusUserContact(f))
+      });
+    }
+    dispatch(updateStatusProfileDispatch(res?.data))
+  } catch (error) {
+    console.log(error)
   }
 }
