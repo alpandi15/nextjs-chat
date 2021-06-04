@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { device } from '../../../styles/LayoutStyle'
 
 interface MobileSideProps {
-  mobileVisible: boolean
+  mobileVisible?: boolean
 }
 export const ContentLayout = styled.div`
   display: flex;
@@ -75,6 +75,10 @@ img {
   align-items: center;
   padding: 0 !important;
 }
+`
+export const LogoutAction = styled.div<MobileSideProps>`
+  display: flex;
+  align-items: center;
 `
 export const ActionContent = styled.div<MobileSideProps>`
   display: none;

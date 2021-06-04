@@ -15,10 +15,10 @@ interface InputTextProps extends HTMLProps<HTMLInputElement> {
 
 const InputConponent: FC<InputTextProps> = ({
   wrapperClassName,
-  className,
+  // className,
   leftIcon,
-  rightIcon,
-  ...props
+  rightIcon
+  // ...props
 }) => {
   return (
     <div className={mergeClasses(wrapperClassName, "relative")}>

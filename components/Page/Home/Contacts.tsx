@@ -17,7 +17,7 @@ import {
 import {
   Header,
   ProfileImg,
-  ActionContent,
+  LogoutAction,
   ButtonIcon,
   FormSearch,
   SearchBar,
@@ -72,12 +72,12 @@ function ListContactFunction({
           <img src="/profile.png" alt=""/>
           <div className="username">{user?.name}</div>
         </ProfileImg>
-        <ActionContent>
+        <LogoutAction>
           <ButtonIcon><FontAwesomeIcon color="#919191" icon={faCommentAlt}/></ButtonIcon>
           <ButtonIcon onClick={logout}>
             <FontAwesomeIcon color="#919191" icon={faSignOutAlt}/>
           </ButtonIcon>
-        </ActionContent>
+        </LogoutAction>
       </Header>
       <FormSearch>
         <div className="left-icon">

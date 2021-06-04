@@ -8,9 +8,9 @@ type ClassProp = null | undefined | string | string[];
 
 export function mergeClasses(classA: ClassProp, classB: ClassProp): string {
   const toArray = (classes: ClassProp) =>
-    typeof classes === "string" ? classes.split(" ") : [...classes];
+    typeof classes === "string" ? classes.split(" ") : classes;
 
-  return [...toArray(classA || []), ...toArray(classB || [])].join(" ");
+  return [toArray(classA || []), toArray(classB || [])].join(" ");
 }
 
 export async function timeout(duration: number): Promise<null> {
