@@ -60,7 +60,6 @@ img {
 .username {
   font-size: 12px;
   margin-left: 10px;
-  font-weight: 500;
 }
 
 .status {
@@ -125,13 +124,17 @@ export const ContentListChat = styled.div`
   overflow: hidden;
   overflow-y: scroll;
 `
-export const UserContact = styled.div`
+interface ContactProps {
+  active?: boolean
+}
+export const UserContact = styled.div<ContactProps>`
   padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ececec;
   cursor: pointer;
+  background-color: ${props => props.active ? '#ededed' : ''};
 `
 export const InputMessage = styled.textarea`
   width: 100%;
@@ -179,4 +182,10 @@ export const FormSendMessage = styled.div`
   .right-icon, .right-icon {
     padding: 10px;
   }
+`
+export const PesanTerakhir = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
 `

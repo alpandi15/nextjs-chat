@@ -22,7 +22,8 @@ import {
   FormSearch,
   SearchBar,
   ContentListChat,
-  UserContact
+  UserContact,
+  PesanTerakhir
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
 import { UserDataContext } from 'context/AppContext'
@@ -32,9 +33,9 @@ function ListContactFunction({
   getProfileData,
   getMessageData,
   updateMessageContact,
-  contacts
+  contacts,
+  profile
 }: any) {
-  const [messageActive, setMessageActive] = useState(null)
   const { user, logout, notification } = useAppContext()
   const [search, setSearch] = useState('')
   const dispatch = useDispatch()
@@ -56,9 +57,7 @@ function ListContactFunction({
 
   const clickFriend = async (contactId: number) => {
     const finded = contacts.find((v: any) => Number(v.id) === Number(contactId))
-    console.log('FINDED ', finded, messageActive)
-    if (messageActive !== finded?.friend?.id) {
-      setMessageActive(finded?.friend?.id)
+    if (profile?.id !== finded?.friend?.id) {
       dispatch(endScrollMessage(true))
       await getProfileData(finded?.friend?.id)
       await getMessageData(finded?.friend?.id)
@@ -99,7 +98,11 @@ function ListContactFunction({
           }).map((val: any, key: number) => {
             if (val?.status === 'diterima') {
               return (
-                <UserContact key={key} onClick={() => clickFriend(val?.id)}>
+                <UserContact
+                  active={profile?.id === val?.friend?.id}
+                  key={key}
+                  onClick={() => clickFriend(val?.id)}
+                >
                   <ProfileImg>
                     <img src="/profile.png" alt=""/>
                     <div>
@@ -110,21 +113,21 @@ function ListContactFunction({
                           ? val?.friend?.read_at === null ? (
                             <>
                               <FontAwesomeIcon className="text-gray-400" icon={faCheck} />
-                              <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                              <PesanTerakhir style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</PesanTerakhir>
                             </>
                           ) : (
                             <>
                               <FontAwesomeIcon className="text-green-500" icon={faCheckDouble} />
-                              <div style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</div>
+                              <PesanTerakhir style={{ marginLeft: '5px' }}>{val?.friend?.pesan_terakhir}</PesanTerakhir>
                             </>
                           )
                           : val?.friend?.read_at === null ? (
                             <>
-                              <div style={{ fontWeight: 600 }}>{val?.friend?.pesan_terakhir}</div>
+                              <PesanTerakhir style={{ fontWeight: 600, fontSize: '11px' }}>{val?.friend?.pesan_terakhir}</PesanTerakhir>
                             </>
                           ) : (
                             <>
-                              <div>{val?.friend?.pesan_terakhir}</div>
+                              <PesanTerakhir>{val?.friend?.pesan_terakhir}</PesanTerakhir>
                             </>
                           )
                         }
@@ -147,10 +150,12 @@ function ListContactFunction({
 
 const mapStateToProps = (state: any) => {
   const {
-    contactStore
+    contactStore,
+    messageStore
   } = state
   return {
-    contacts: contactStore?.contacts
+    contacts: contactStore?.contacts,
+    profile: messageStore?.profile
   }
 }
 
