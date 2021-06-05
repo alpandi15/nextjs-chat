@@ -29,6 +29,8 @@ import {
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
 import { UserDataContext } from 'context/AppContext'
+import Modal from 'components/Modal'
+import ModalNotification from './Modal/Notification'
 
 function ListContactFunction({
   getContactsData,
@@ -41,6 +43,10 @@ function ListContactFunction({
   const { user, logout, notification } = useAppContext()
   const [search, setSearch] = useState('')
   const dispatch = useDispatch()
+  const [modal, setModal] = useState({
+    notification: false,
+    friends: false
+  })
 
   useEffect(() => {
     const fetch = async () => {
@@ -67,6 +73,12 @@ function ListContactFunction({
     }
   }
 
+  const handleModal = (state: "notification" | 'friends') => {
+    setModal({
+      ...modal,
+      [state]: !modal[state]
+    })
+  }
   return (
     <>
       <Header>
@@ -76,7 +88,7 @@ function ListContactFunction({
         </ProfileImg>
         <LogoutAction>
           <ButtonIcon><FontAwesomeIcon color="#919191" icon={faUserFriends}/></ButtonIcon>
-          <ButtonIcon>
+          <ButtonIcon onClick={() => handleModal('notification')}>
             <FontAwesomeIcon color="#919191" icon={faBell}/>
             <Badge>2</Badge>
           </ButtonIcon>
@@ -151,6 +163,13 @@ function ListContactFunction({
           })
         }
       </ContentListChat>
+
+      <Modal
+        open={modal?.notification}
+        onClose={() => handleModal('notification')}
+      >
+        <ModalNotification />
+      </Modal>
     </>
   )
 }
