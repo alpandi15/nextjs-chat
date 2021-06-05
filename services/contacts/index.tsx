@@ -16,3 +16,11 @@ export async function apiCheckOnline () {
   })
 }
 
+export async function apiGetContactKonfirmasi () {
+  return request({
+    url: 'api/contact/konfirmasi',
+    auth: true,
+    method: 'get'
+  })
+}
+

@@ -1,7 +1,8 @@
 import {
   SET_CONTACT_DATA,
   UPDATE_MESSAGE_TERAKHIR_DIMENU_USER,
-  UPDATE_STATUS_USER_DIMENU_USER
+  UPDATE_STATUS_USER_DIMENU_USER,
+  SET_CONTACT_DATA_KONFIRMASI
 } from '../type'
 
 interface ActionProps {
@@ -11,9 +12,9 @@ interface ActionProps {
 
 type InitialProps = {
   contacts?: string[],
-  contactKonfirmasi?: [],
-  contactTolak?: [],
-  contactProsess?: [],
+  contactKonfirmasi?: string[],
+  contactTolak?: string[],
+  contactProsess?: string[],
 }
 
 const initialState: InitialProps = {
@@ -50,11 +51,6 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
         }
       }
       return state
-      // let filterData = state?.contacts.filter(v => v.friend.id == action?.payload.id)
-      // let contacts: [] = []
-      // filterData.forEach(f => {
-      //   contacts = state?.contacts[state?.contacts.findIndex(v => v.friend.id == f.friend.id)].friend.terakhir_dilihat = action?.payload.status
-      // });
     case UPDATE_MESSAGE_TERAKHIR_DIMENU_USER:
       const { payload } = action
 
@@ -93,6 +89,12 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       return {
         ...state
       }
+    case SET_CONTACT_DATA_KONFIRMASI:
+      return {
+        ...state,
+        contactKonfirmasi: action?.payload
+      }
+
     default:
       return state
   }

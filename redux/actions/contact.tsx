@@ -1,11 +1,13 @@
 import {
   SET_CONTACT_DATA,
+  SET_CONTACT_DATA_KONFIRMASI,
   UPDATE_MESSAGE_TERAKHIR_DIMENU_USER,
   UPDATE_STATUS_USER_DIMENU_USER
 } from '../type'
 import {
   apiGetContact,
-  apiCheckOnline
+  apiCheckOnline,
+  apiGetContactKonfirmasi
 } from '../../services/contacts'
 import { UserDataContext } from '../../context/AppContext'
 import { updateStatusProfileDispatch } from './message'
@@ -69,14 +71,34 @@ export const getContactsData = () => async (dispatch: any) => {
 export const updateStatusContact = () => async (dispatch: any) => {
   try {
     const res = await apiCheckOnline()
-    console.log('DATA ONLINE ', res)
     if (res?.data?.length > 0) {
       res?.data.forEach((f: any) => {
-        // commit('UPDATE_STATUS_USER_DIMENU_USER', f)
         dispatch(commitUpdateStatusUserContact(f))
       });
     }
     dispatch(updateStatusProfileDispatch(res?.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// const commitContactKonfirmasi = (data: any) => {
+//   return {
+//     type: SET_CONTACT_DATA_KONFIRMASI,
+//     payload: data
+//   }
+// }
+
+export const getContactsDataKonfirmasi = () => async (dispatch: any) => {
+  try {
+    const res = await apiGetContactKonfirmasi()
+    if (res?.data?.length > 0) {
+      dispatch({
+        type: SET_CONTACT_DATA_KONFIRMASI,
+        payload: res?.data
+      })
+    }
+    return res?.data
   } catch (error) {
     console.log(error)
   }

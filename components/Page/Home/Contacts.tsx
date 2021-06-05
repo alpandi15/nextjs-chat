@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import {
   faCheck,
   faCheckDouble,
@@ -41,6 +41,7 @@ function ListContactFunction({
   profile
 }: any) {
   const { user, logout, notification } = useAppContext()
+  const contactKonfirmasi = useSelector((state: any) => state?.contactStore?.contactKonfirmasi)
   const [search, setSearch] = useState('')
   const dispatch = useDispatch()
   const [modal, setModal] = useState({
@@ -90,7 +91,11 @@ function ListContactFunction({
           <ButtonIcon><FontAwesomeIcon color="#919191" icon={faUserFriends}/></ButtonIcon>
           <ButtonIcon onClick={() => handleModal('notification')}>
             <FontAwesomeIcon color="#919191" icon={faBell}/>
-            <Badge>2</Badge>
+            {
+              contactKonfirmasi?.length !== 0 && (
+                <Badge>{contactKonfirmasi?.length}</Badge>
+              )
+            }
           </ButtonIcon>
           <ButtonIcon onClick={logout}>
             <FontAwesomeIcon color="#919191" icon={faSignOutAlt}/>
@@ -163,7 +168,6 @@ function ListContactFunction({
           })
         }
       </ContentListChat>
-
       <Modal
         open={modal?.notification}
         onClose={() => handleModal('notification')}
