@@ -36,9 +36,17 @@ const apiChangePhone = async (data: any) => {
   })
 }
 
+const apiGetAllUser = async () => {
+  return request({
+    url: 'api/all-user',
+    auth: true,
+    method: 'get'
+  })
+}
 export {
   apiEditProfile,
   apiChangePassword,
   apiChangeEmail,
-  apiChangePhone
+  apiChangePhone,
+  apiGetAllUser
 }

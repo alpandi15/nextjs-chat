@@ -38,6 +38,7 @@ import { useAppContext } from '../../../hook/useAppData'
 import { UserDataContext } from 'context/AppContext'
 import Modal from 'components/Modal'
 import ModalNotification from './Modal/Notification'
+import UserList from './Modal/UserList'
 
 function ListContactFunction({
   getContactsData,
@@ -112,7 +113,7 @@ function ListContactFunction({
           <div className="username">{user?.name}</div>
         </ProfileImg>
         <LogoutAction>
-          <ButtonIcon><FontAwesomeIcon color="#919191" icon={faUserFriends}/></ButtonIcon>
+          <ButtonIcon onClick={() => handleModal('friends')}><FontAwesomeIcon color="#919191" icon={faUserFriends}/></ButtonIcon>
           <ButtonIcon onClick={() => handleModal('notification')}>
             <FontAwesomeIcon color="#919191" icon={faBell}/>
             {
@@ -198,6 +199,16 @@ function ListContactFunction({
       >
         <ModalNotification />
       </Modal>
+      {
+        modal?.friends && (
+          <Modal
+            open={modal?.friends}
+            onClose={() => handleModal('friends')}
+          >
+            <UserList />
+          </Modal>
+        )
+      }
     </>
   )
 }
