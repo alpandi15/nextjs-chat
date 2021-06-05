@@ -24,3 +24,11 @@ export async function apiGetContactKonfirmasi () {
   })
 }
 
+export async function apiDestroyKonfirmasi (id: number, data: {status: 'ditolak' | 'diterima'}) {
+  return request({
+    url: `api/contact/konfirmasi/${id}`,
+    auth: true,
+    method: 'patch',
+    data
+  })
+}

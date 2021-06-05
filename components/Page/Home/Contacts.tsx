@@ -9,7 +9,14 @@ import {
   faUserFriends
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
+import {
+  addContactDataKonfirmasi,
+  addContactDataProses,
+  getContactsData,
+  konfirmasiContactDiterima,
+  konfirmasiContactTolak,
+  updateMessageContact
+} from '../../../redux/actions/contact'
 import {
   getProfileData,
   getMessageData,
@@ -59,8 +66,25 @@ function ListContactFunction({
   useEffect(() => {
     (async () => {
       if(notification?.message !== undefined) {
-        console.log('TERIMA ', notification)
         await updateMessageContact(notification?.message, user)
+      }
+
+      if(notification.contact !== undefined){
+        if(notification.contact.status === 'proses' && notification.contact.friend.id !== user?.id){
+          // ini pengirim pertemanan masuk ke proses
+          addContactDataProses(notification.contact)
+          // console.log('tambah teman');
+          }else if(notification.contact.status === 'proses' && notification.contact.friend.id === user?.id){
+              // ini penerima pertemanan masuk ke konfirmasi
+              addContactDataKonfirmasi(notification.contact)
+          }else if(notification.contact.status === 'ditolak'){
+              konfirmasiContactTolak(notification.contact, user)
+              
+          }else if(notification.contact.status === 'diterima'){
+              konfirmasiContactDiterima(notification.contact, user)
+              // console.log('diterima');
+              
+          }
       }
     })()
   }, [notification])

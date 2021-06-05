@@ -86,6 +86,10 @@ export async function request({
         response = await axios.put(`${useUrl}`, data, { headers })
         break
       }
+      case 'patch': {
+        response = await axios.patch(`${useUrl}`, data, { headers })
+        break
+      }
       case 'delete': {
         response = await axios.delete(`${useUrl}`, { data, headers })
         break

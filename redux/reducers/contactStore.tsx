@@ -2,7 +2,15 @@ import {
   SET_CONTACT_DATA,
   UPDATE_MESSAGE_TERAKHIR_DIMENU_USER,
   UPDATE_STATUS_USER_DIMENU_USER,
-  SET_CONTACT_DATA_KONFIRMASI
+  SET_CONTACT_DATA_KONFIRMASI,
+  DELETE_CONTACT_DATA_PROSES,
+  DELETE_CONTACT_DATA_TOLAK,
+  ADD_CONTACT_DATA_PROSES,
+  ADD_CONTACT_DATA_KONFIRMASI,
+  ADD_CONTACT_DATA_TOLAK,
+  DELETE_CONTACT_DATA_KONFIRMASI,
+  DELETE_CONTACT_DATA_TOLAK_BY_ID_USER,
+  ADD_CONTACT_DATA
 } from '../type'
 
 interface ActionProps {
@@ -94,7 +102,111 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
         ...state,
         contactKonfirmasi: action?.payload
       }
-
+    case DELETE_CONTACT_DATA_PROSES:
+      if (state?.contactProsess !== undefined) {
+        const deletingContactProcess = state?.contactProsess?.filter((val: any) => {
+          if (val?.id !== action?.payload?.id) {
+            return val
+          }
+        })
+        return {
+          ...state,
+          contactProsess: deletingContactProcess
+        }
+      }
+      return state
+    case ADD_CONTACT_DATA_PROSES:
+      if (state?.contactProsess !== undefined) {
+        return {
+          ...state,
+          contactProsess: state?.contactProsess?.push(action?.payload)
+        }
+      }
+      return state
+    case DELETE_CONTACT_DATA_TOLAK:
+      if (state?.contactTolak !== undefined) {
+        const deletingContact = state?.contactTolak?.filter((val: any) => {
+          if (val?.id !== action?.payload?.id) {
+            return val
+          }
+        })
+        return {
+          ...state,
+          contactTolak: deletingContact
+        }
+      }
+      return state
+    case ADD_CONTACT_DATA_PROSES:
+      if (state?.contactProsess !== undefined) {
+        return {
+          ...state,
+          contactProsess: state?.contactProsess?.push(action?.payload)
+        }
+      }
+      return state
+    case ADD_CONTACT_DATA_KONFIRMASI:
+      if (state?.contactKonfirmasi !== undefined) {
+        return {
+          ...state,
+          contactKonfirmasi: state?.contactKonfirmasi?.push(action?.payload)
+        }
+      }
+      return state
+    case ADD_CONTACT_DATA_TOLAK:
+      if (state?.contactTolak !== undefined) {
+        return {
+          ...state,
+          contactTolak: state?.contactTolak?.push(action?.payload)
+        }
+      }
+      return state
+    case DELETE_CONTACT_DATA_PROSES:
+      if (state?.contactProsess !== undefined) {
+        const deletingContact = state?.contactProsess?.filter((val: any) => {
+          if (val?.id !== action?.payload?.id) {
+            return val
+          }
+        })
+        return {
+          ...state,
+          contactProsess: deletingContact
+        }
+      }
+      return state
+    case DELETE_CONTACT_DATA_KONFIRMASI:
+      if (state?.contactKonfirmasi !== undefined) {
+        const deletingContact = state?.contactKonfirmasi?.filter((val: any) => {
+          if (val?.id !== action?.payload?.id) {
+            return val
+          }
+        })
+        return {
+          ...state,
+          contactKonfirmasi: deletingContact
+        }
+      }
+      return state
+    case DELETE_CONTACT_DATA_TOLAK_BY_ID_USER:
+      if (state?.contactTolak !== undefined) {
+        const deletingContact = state?.contactTolak?.filter((val: any) => {
+          if (val?.friend?.id !== action?.payload?.friend?.id) {
+            return val
+          }
+        })
+        return {
+          ...state,
+          contactTolak: deletingContact
+        }
+      }
+      return state
+    case ADD_CONTACT_DATA:
+      if (state?.contacts !== undefined) {
+        return {
+          ...state,
+          contacts: state?.contacts?.push(action?.payload)
+        }
+      }
+      return state
     default:
       return state
   }
