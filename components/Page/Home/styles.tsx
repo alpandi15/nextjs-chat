@@ -90,6 +90,7 @@ export const ButtonIcon = styled.div`
   padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
+  position: relative;
 `
 export const FormSearch = styled.div`
   padding: 5px 10px;
@@ -188,4 +189,20 @@ export const PesanTerakhir = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100px;
+`
+
+export const Badge = styled.div`
+  position: absolute;
+  font-size: 9px;
+  top: 0;
+  right: 0;
+  background: red;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

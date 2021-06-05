@@ -3,9 +3,10 @@ import { connect, useDispatch } from 'react-redux'
 import {
   faCheck,
   faCheckDouble,
-  faCommentAlt,
+  faBell,
   faSignOutAlt,
-  faSearch
+  faSearch,
+  faUserFriends
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getContactsData, updateMessageContact } from '../../../redux/actions/contact'
@@ -23,7 +24,8 @@ import {
   SearchBar,
   ContentListChat,
   UserContact,
-  PesanTerakhir
+  PesanTerakhir,
+  Badge
 } from './styles'
 import { useAppContext } from '../../../hook/useAppData'
 import { UserDataContext } from 'context/AppContext'
@@ -73,7 +75,11 @@ function ListContactFunction({
           <div className="username">{user?.name}</div>
         </ProfileImg>
         <LogoutAction>
-          <ButtonIcon><FontAwesomeIcon color="#919191" icon={faCommentAlt}/></ButtonIcon>
+          <ButtonIcon><FontAwesomeIcon color="#919191" icon={faUserFriends}/></ButtonIcon>
+          <ButtonIcon>
+            <FontAwesomeIcon color="#919191" icon={faBell}/>
+            <Badge>2</Badge>
+          </ButtonIcon>
           <ButtonIcon onClick={logout}>
             <FontAwesomeIcon color="#919191" icon={faSignOutAlt}/>
           </ButtonIcon>
