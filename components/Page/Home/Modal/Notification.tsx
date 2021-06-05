@@ -16,6 +16,11 @@ const Notification = () => {
       status: 'diterima'
     })
   }
+  const tolakTeman = async (id: number) => {
+    await apiDestroyKonfirmasi(id, {
+      status: 'ditolak'
+    })
+  }
   return (
     <>
       <h1 className="text-xl text-center">Permintaan Teman</h1>
@@ -27,7 +32,7 @@ const Notification = () => {
               <h3 className="text-xl pr-8 pl-2">{val?.friend?.username}</h3>
               <div>
                 <button onClick={() => terimaTeman(val?.friend?.id)} className="block p-1 text-sm bg-blue-400 text-white rounded-lg disabled:bg-gray-800">Terima</button>
-                <button className="block p-1 text-sm bg-red-400 text-white rounded-lg disabled:bg-gray-800">Tolak</button>
+                <button onClick={() => tolakTeman(val?.friend?.id)} className="block p-1 text-sm bg-red-400 text-white rounded-lg disabled:bg-gray-800">Tolak</button>
               </div>
             </div>
           ))
