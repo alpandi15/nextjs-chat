@@ -10,7 +10,7 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query/devtools'
 import styled from 'styled-components'
 import GlobalStyle from '../styles/GlobalStyle'
-import { apiGetProfile, logout } from '../services/auth'
+import { logout } from '../services/auth'
 import ApplicationContext, { AppContextType, UserDataContext } from '../context/AppContext'
 import { useRouteState } from '../hook/useRouteState'
 import { getCookies } from '../services/utils/storage'
@@ -99,22 +99,23 @@ function MyApp({
 }
 
 MyApp.getInitialProps = async ({Component, ctx}: AppContext) => {
-  let pageProps = {}
-  let user: UserDataContext = {}
+  let pageProps: any = {}
+  // let user: UserDataContext = {}
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
   }
 
-  const response = await apiGetProfile(ctx)
-  if (response?.success) {
-    user = response?.data
-  }
+  // const response = await apiGetProfile(ctx)
+  // console.log('AUTH ', pageProps)
+  // if (response?.success) {
+  //   user = response?.data
+  // }
 
   return {
     pageProps,
     navigation: 'Navigasi Ini',
-    user
+    user: pageProps?.user
   }
 }
 

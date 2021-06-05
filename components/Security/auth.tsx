@@ -2,19 +2,21 @@ import { Component } from 'react'
 import { TOKEN } from '../../constants'
 import Router from 'next/router'
 import { NextComponentType, NextPageContext } from 'next'
-import { parseCookies  } from 'nookies'
+import { parseCookies, destroyCookie  } from 'nookies'
+import { apiGetProfile } from '../../services/auth'
 
 const getDisplayName = (Components: NextComponentType) => Components.displayName || Components.name || 'Component'
 
-export const auth = (ctx: any) => {
+export const auth = async (ctx: any) => {
   const token = parseCookies(ctx)[TOKEN]
-  /*
-   * This happens on server only, ctx.req is available means it's being
-   * rendered on server. If we are on server and token is not available,
-   * means user is not logged in.
-   */
+  let user: any = {}
+  const res = await apiGetProfile(ctx)
+  if (res?.success) {
+    user = res?.data
+  }
 
-  if (ctx.req && !token) {
+  if (token && !res?.success && res?.statusCode === 401) {
+    destroyCookie(ctx, TOKEN)
     const redirect = ctx
       && ctx.pathname
       && ctx.pathname !== '/auth/login'
@@ -25,7 +27,33 @@ export const auth = (ctx: any) => {
       Location: redirect
     })
     ctx.res.end()
-    return token
+    return {
+      token,
+      user
+    }
+  }
+
+  /*
+   * This happens on server only, ctx.req is available means it's being
+   * rendered on server. If we are on server and token is not available,
+   * means user is not logged in.
+   */
+  if (ctx.req && !token) {
+    // await logout(ctx)
+    const redirect = ctx
+      && ctx.pathname
+      && ctx.pathname !== '/auth/login'
+        ? `/auth/login?path=${ctx?.pathname}`
+        : '/auth/login'
+
+    ctx.res.writeHead(302, {
+      Location: redirect
+    })
+    ctx.res.end()
+    return {
+      token,
+      user
+    }
   }
 
   // We already checked for server. This should only happen on client.
@@ -38,7 +66,10 @@ export const auth = (ctx: any) => {
     }
   }
 
-  return token
+  return {
+    token,
+    user
+  }
 }
 
 export const withAuthSync = (WrappedComponent: NextComponentType) => class extends Component {
@@ -49,8 +80,8 @@ export const withAuthSync = (WrappedComponent: NextComponentType) => class exten
     const componentProps = WrappedComponent.getInitialProps
     && (await WrappedComponent.getInitialProps(ctx))
 
-    const token = await auth(ctx)
-    return { ...componentProps, token }
+    const { token, user } = await auth(ctx)
+    return { ...componentProps, token, user }
   }
 
   constructor (props: any) {
