@@ -119,7 +119,10 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       if (state?.contactProsess !== undefined) {
         return {
           ...state,
-          contactProsess: state?.contactProsess?.push(action?.payload)
+          contactProsess: [
+            ...state?.contactProsess,
+            action?.payload
+          ]
         }
       }
       return state
@@ -140,7 +143,10 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       if (state?.contactProsess !== undefined) {
         return {
           ...state,
-          contactProsess: state?.contactProsess?.push(action?.payload)
+          contactProsess: [
+            ...state?.contactProsess,
+            action?.payload
+          ]
         }
       }
       return state
@@ -148,7 +154,10 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       if (state?.contactKonfirmasi !== undefined) {
         return {
           ...state,
-          contactKonfirmasi: state?.contactKonfirmasi?.push(action?.payload)
+          contactKonfirmasi: [
+            ...state?.contactKonfirmasi,
+            action?.payload
+          ]
         }
       }
       return state
@@ -156,7 +165,10 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       if (state?.contactTolak !== undefined) {
         return {
           ...state,
-          contactTolak: state?.contactTolak?.push(action?.payload)
+          contactTolak: [
+            ...state?.contactTolak,
+            action?.payload
+          ]
         }
       }
       return state
@@ -201,9 +213,13 @@ const contactStore = (state: InitialProps = initialState, action: ActionProps = 
       return state
     case ADD_CONTACT_DATA:
       if (state?.contacts !== undefined) {
+        console.log('ADD CONTACT ', action.payload)
         return {
           ...state,
-          contacts: state?.contacts?.push(action?.payload)
+          contacts: [
+            ...state?.contacts,
+            action?.payload
+          ]
         }
       }
       return state

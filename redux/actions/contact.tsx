@@ -199,12 +199,14 @@ export const konfirmasiContactDiterima = (data: any, user: UserDataContext) => a
       updated_at: data?.updated_at
     }
     if(newDataPengirim?.friend?.id !== user.id){
+      console.log('DITERIMA PENGIRIM', newDataPengirim)
       dispatch({
         type: ADD_CONTACT_DATA,
         payload: newDataPengirim
       })
       // commit('ADD_CONTACT_DATA', newDataPengirim)
     }else{
+      console.log('DITERIMA PENERIMA ', newDataPengirim)
       dispatch({ type: ADD_CONTACT_DATA, payload: newDataPenerima })
       // commit('ADD_CONTACT_DATA', newDataPenerima)
     }

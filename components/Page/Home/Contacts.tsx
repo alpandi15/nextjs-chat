@@ -72,19 +72,19 @@ function ListContactFunction({
       if(notification.contact !== undefined){
         if(notification.contact.status === 'proses' && notification.contact.friend.id !== user?.id){
           // ini pengirim pertemanan masuk ke proses
-          addContactDataProses(notification.contact)
-          // console.log('tambah teman');
-          }else if(notification.contact.status === 'proses' && notification.contact.friend.id === user?.id){
-              // ini penerima pertemanan masuk ke konfirmasi
-              addContactDataKonfirmasi(notification.contact)
-          }else if(notification.contact.status === 'ditolak'){
-              konfirmasiContactTolak(notification.contact, user)
-              
-          }else if(notification.contact.status === 'diterima'){
-              konfirmasiContactDiterima(notification.contact, user)
-              // console.log('diterima');
-              
-          }
+          dispatch(addContactDataProses(notification.contact))
+        // console.log('tambah teman');
+        }else if(notification.contact.status === 'proses' && notification.contact.friend.id === user?.id){
+            // ini penerima pertemanan masuk ke konfirmasi
+          dispatch(addContactDataKonfirmasi(notification.contact))
+        }else if(notification.contact.status === 'ditolak'){
+          dispatch(konfirmasiContactTolak(notification.contact, user))
+            
+        }else if(notification.contact.status === 'diterima'){
+          dispatch(konfirmasiContactDiterima(notification.contact, user))
+          console.log('diterima');
+            
+        }
       }
     })()
   }, [notification])

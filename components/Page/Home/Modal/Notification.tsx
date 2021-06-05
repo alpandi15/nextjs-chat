@@ -12,7 +12,6 @@ const Notification = () => {
     })()
   }, [])
   const terimaTeman = async (id: number) => {
-    alert('Terima')
     await apiDestroyKonfirmasi(id, {
       status: 'diterima'
     })
