@@ -38,3 +38,11 @@ export async function logout(ctx: any = null) {
   await removeCookies(TOKEN)
   Router.replace('/auth/login')
 }
+
+export async function closeWindow () {
+  return request({
+    url: 'api/close/window',
+    auth: true,
+    method: 'get'
+  })
+}

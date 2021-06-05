@@ -10,16 +10,29 @@ import {
   RightSide
 } from '../../components/Page/Home/styles'
 import { updateStatusContact } from '../../redux/actions/contact'
+import { closeWindow } from '../../services/auth'
 
 const Home = ({
   updateStatusContact,
   profile
 }: any) => {
+  const handlerClose = async (e: any) => {
+    e.returnValue = 'Closed'
+    await closeWindow()
+  }
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', handlerClose)
+    }
+
+  }, [handlerClose])
+
   React.useEffect(() => {
     const intervalStatus = setInterval(async () => {
       await updateStatusContact()
     }, 58000)
-    
+
     return () => {
       clearInterval(intervalStatus)
     }
