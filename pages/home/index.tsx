@@ -16,17 +16,17 @@ const Home = ({
   updateStatusContact,
   profile
 }: any) => {
-  // const handlerClose = async (e: any) => {
-  //   e.returnValue = 'Closed'
-  //   await closeWindow()
-  // }
+  const handlerClose = async (e: any) => {
+    e.returnValue = 'Closed'
+    await closeWindow()
+  }
 
-  // React.useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     window.addEventListener('beforeunload', handlerClose)
-  //   }
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', handlerClose)
+    }
 
-  // }, [handlerClose])
+  }, [handlerClose])
 
   React.useEffect(() => {
     const intervalStatus = setInterval(async () => {
