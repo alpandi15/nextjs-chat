@@ -18,15 +18,15 @@ export const auth = async (ctx: any) => {
   if (token && !res?.success && res?.statusCode === 401) {
     destroyCookie(ctx, TOKEN)
     const redirect = ctx
-      && ctx.pathname
-      && ctx.pathname !== '/auth/login'
+      && ctx?.pathname
+      && ctx?.pathname !== '/auth/login'
         ? `/auth/login?path=${ctx?.pathname}`
         : '/auth/login'
 
-    ctx.res.writeHead(302, {
+    ctx?.res?.writeHead(302, {
       Location: redirect
     })
-    ctx.res.end()
+    ctx?.res?.end()
     return {
       token,
       user
@@ -41,15 +41,15 @@ export const auth = async (ctx: any) => {
   if (ctx.req && !token) {
     // await logout(ctx)
     const redirect = ctx
-      && ctx.pathname
-      && ctx.pathname !== '/auth/login'
+      && ctx?.pathname
+      && ctx?.pathname !== '/auth/login'
         ? `/auth/login?path=${ctx?.pathname}`
         : '/auth/login'
 
-    ctx.res.writeHead(302, {
+    ctx?.res?.writeHead(302, {
       Location: redirect
     })
-    ctx.res.end()
+    ctx?.res?.end()
     return {
       token,
       user
@@ -58,7 +58,7 @@ export const auth = async (ctx: any) => {
 
   // We already checked for server. This should only happen on client.
   if (!token) {
-    if (ctx && ctx.pathname && ctx.pathname !== '/auth/login') {
+    if (ctx && ctx?.pathname && ctx?.pathname !== '/auth/login') {
       // Router.push(`/auth/login?path=${ctx.req.url}`)
       Router.push(`/auth/login?path=${ctx.pathname}`)
     } else {
@@ -118,12 +118,12 @@ export const isLogged = (ctx: any) => {
    * rendered on server. If we are on server and token is not available,
    * means user is not logged in.
    */
-  if (ctx.req && token) {
+  if (ctx?.req && token) {
     let redirect = '/home'
-    ctx.res.writeHead(302, {
+    ctx?.res?.writeHead(302, {
       Location: redirect
     })
-    ctx.res.end()
+    ctx?.res?.end()
     return
   }
 
