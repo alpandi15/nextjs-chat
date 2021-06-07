@@ -23,7 +23,9 @@ const Notification = () => {
   }
   return (
     <>
-      <h1 className="text-xl text-center">Permintaan Teman</h1>
+      <div>
+        <h1 className="text-xl">Permintaan Teman</h1>
+      </div>
       <div>
         {
           contactKonfirmasi?.map((val: any, index: number) => (

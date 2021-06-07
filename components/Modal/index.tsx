@@ -19,13 +19,13 @@ const Modal = ({
   return (
     <Content open={open} className="inline-block z-50 absolute w-full bg-black h-screen top-0 left-0 bg-opacity-50 duration-200 modal">
       <div className="w-full pt-32 flex justify-center area-modal">
-        <div className="bg-white rounded-lg inline-block">
+        <div className="bg-white inline-block">
           <div className="flex justify-end">
             <div className="mr-1 mt-1" onClick={onClose}>
               <FontAwesomeIcon icon={faTimes} />
             </div>
           </div>
-          <div className="px-6 py-6">
+          <div className="px-2 py-2">
             {children}
           </div>
         </div>
