@@ -78,7 +78,7 @@ function ListContactFunction({
         // console.log('tambah teman');
         }else if(notification.contact.status === 'proses' && notification.contact.friend.id === user?.id){
             // ini penerima pertemanan masuk ke konfirmasi
-          dispatch(addContactDataKonfirmasi(notification.contact))
+          dispatch(addContactDataKonfirmasi(notification.contact, user))
         }else if(notification.contact.status === 'ditolak'){
           dispatch(konfirmasiContactTolak(notification.contact, user))
             

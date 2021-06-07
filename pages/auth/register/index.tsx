@@ -22,7 +22,7 @@ import { apiRegister } from '../../../services/auth'
 
 type FormInputProps = {
   username: string,
-  // name: string,
+  name: string,
   // email: string,
   // phone: string,
   password: string,
@@ -61,6 +61,31 @@ export default loggedChecked(function Register () {
         <FormContent>
           <h3>Register</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl>
+              <Input
+                type="text"
+                id="name"
+                className={errors?.name ? 'invalid' : ''}
+                {...register('name',
+                  {
+                    required: 'Name Required*',
+                    maxLength: { value: 30, message: 'Max Length 30 character' },
+                    minLength: { value: 6, message: 'Min Length 6 character' }
+                  })
+                }
+              />
+              <Label
+                htmlFor="name"
+                className={`active ${errors?.name ? 'invalid' : 'valid'}`}
+              >Name</Label>
+              {
+                errors?.name && (
+                  <ErrorInputMessage>
+                    {errors?.name?.message}
+                  </ErrorInputMessage>
+                )
+              }
+            </FormControl>
             <FormControl>
               <Input
                 type="text"

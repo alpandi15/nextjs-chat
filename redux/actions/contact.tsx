@@ -138,15 +138,26 @@ export const addContactDataProses = (data: any) => async (dispatch: any) => {
   }
 }
 
-export const addContactDataKonfirmasi = (data: any) => async (dispatch: any) => {
+export const addContactDataKonfirmasi = (data: any, user: UserDataContext) => async (dispatch: any) => {
   try {
-    let newData = {
-      id: data?.id,
-      friend: data?.friend,
-      status: data?.status,
-      created_at: data?.created_at,
-      updated_at: data?.updated_at
-  };
+    let newData = {};
+    if (data?.friend?.id === user?.id) {
+      newData = {
+        id: data?.id,
+        friend: data?.me,
+        status: data?.status,
+        created_at: data?.created_at,
+        updated_at: data?.updated_at
+      };
+    } else {
+      newData = {
+        id: data?.id,
+        friend: data?.friend,
+        status: data?.status,
+        created_at: data?.created_at,
+        updated_at: data?.updated_at
+      };
+    }
     dispatch({
       type: ADD_CONTACT_DATA_KONFIRMASI,
       payload: newData
