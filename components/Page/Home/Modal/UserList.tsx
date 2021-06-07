@@ -21,9 +21,6 @@ const UserList = () => {
 
   return (
     <>
-      <div>
-        <h1 className="text-xl">Daftar User</h1>
-      </div>
       <Scroll>
         {
           usersData?.map((val: any, index: number) => (

@@ -24,9 +24,6 @@ const Notification = () => {
   return (
     <>
       <div>
-        <h1 className="text-xl">Permintaan Teman</h1>
-      </div>
-      <div>
         {
           contactKonfirmasi?.map((val: any, index: number) => (
             <div className="flex mt-4 items-center bg-gray-300 p-2 rounded-lg" key={index}>

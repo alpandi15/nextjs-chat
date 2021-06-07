@@ -194,15 +194,21 @@ function ListContactFunction({
           })
         }
       </ContentListChat>
-      <Modal
-        open={modal?.notification}
-        onClose={() => handleModal('notification')}
-      >
-        <ModalNotification />
-      </Modal>
+      {
+        modal?.notification && (
+          <Modal
+            title="Permintaan Pertemanan"
+            open={modal?.notification}
+            onClose={() => handleModal('notification')}
+          >
+            <ModalNotification />
+          </Modal>
+        )
+      }
       {
         modal?.friends && (
           <Modal
+            title="Daftar User"
             open={modal?.friends}
             onClose={() => handleModal('friends')}
           >
