@@ -39,6 +39,7 @@ import { UserDataContext } from 'context/AppContext'
 import Modal from 'components/Modal'
 import ModalNotification from './Modal/Notification'
 import UserList from './Modal/UserList'
+import { updateUserData } from 'redux/actions/user'
 
 function ListContactFunction({
   getContactsData,
@@ -84,8 +85,8 @@ function ListContactFunction({
         }else if(notification.contact.status === 'diterima'){
           dispatch(konfirmasiContactDiterima(notification.contact, user))
           console.log('diterima');
-            
         }
+        dispatch(updateUserData(notification.contact))
       }
     })()
   }, [notification])

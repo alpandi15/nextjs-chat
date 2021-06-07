@@ -39,6 +39,14 @@ const apiChangePhone = async (data: any) => {
 const apiGetAllUser = async () => {
   return request({
     url: 'api/all-user',
+    auth: false,
+    method: 'get'
+  })
+}
+
+const apiGetAllUserFriend = async () => {
+  return request({
+    url: 'api/get-all-user',
     auth: true,
     method: 'get'
   })
@@ -48,5 +56,6 @@ export {
   apiChangePassword,
   apiChangeEmail,
   apiChangePhone,
-  apiGetAllUser
+  apiGetAllUser,
+  apiGetAllUserFriend
 }

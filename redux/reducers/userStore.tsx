@@ -1,6 +1,7 @@
 import {
   SET_USER_DATA,
-  ADD_USER_DATA
+  ADD_USER_DATA,
+  UPDATE_USER_DATA
 } from '../type'
 
 interface ActionProps {
@@ -28,6 +29,26 @@ const userStore = (state: InitialProps = initialState, action: ActionProps) => {
           ...state?.users,
           action?.payload
         ]
+      }
+    case UPDATE_USER_DATA:
+      const mappingUpdate = state?.users?.map((v: any) => {
+        if (v?.id === action?.payload?.friend?.id) {
+          return {
+            ...v,
+            berteman: {
+              ...v?.bertemen,
+              id: action?.payload?.id,
+              me: action?.payload?.me?.id,
+              friend: action?.payload?.friend?.id,
+              status: action?.payload?.status
+            }
+          }
+        }
+        return v
+      })
+      return {
+        ...state,
+        users: mappingUpdate
       }
     default:
       return state

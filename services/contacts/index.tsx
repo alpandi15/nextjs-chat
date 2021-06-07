@@ -8,6 +8,15 @@ export async function apiGetContact () {
   })
 }
 
+export async function apiAddContact (data: { friend: string }) {
+  return request({
+    url: 'api/contact',
+    auth: true,
+    method: 'post',
+    data
+  })
+}
+
 export async function apiCheckOnline () {
   return request({
     url: 'api/check/online',
